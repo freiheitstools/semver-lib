@@ -1,0 +1,18 @@
+= Statediagram of the implemented FSM
+
+This directory contains a http://mermaid.js.org/[Mermaid^] diagram of the FSA used by the parser for Semantic Versions.
+
+== Viewing the diagram
+
+You can view the diagram online in the live preview of Mermaid or by installing the Mermaid plugin for IntelliJ IDEA in the IDE directly.
+
+== Updating the diagramm
+
+Updating the diagram is only needed, if the implementation of the class `SemVerFiniteStateTransitionTable` has changed.
+
+To update the diagram do the following:
+
+1. Run the Python programm `extract-transitions.py` with Python 3.
+2. Capture the output of the programm and use it to replace the current transitions in the diagram.
+3. Set the style classes in the diagram
+4. Edit the labels for the transistions and replace `TransitionCharSet.ofNegationFor` with an `!` as indicator or a negation and put the negated character classes in braces.
