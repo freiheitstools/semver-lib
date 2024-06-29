@@ -1,16 +1,19 @@
-package io.github.freiheitstools.semver.parser;
+package io.github.freiheitsgrade.semver.parser.api;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Optional;
 
+/**
+ * <p>Representation of a semantic version</p>
+ *
+ * @see <a href="https://semver.org">Semantic version specification</a>
+ */
 public interface SemVer {
 
     /**
-     * <p>
-     *     Returns the major version of the semantic version in case of a
-     *     valid semantic version.
-     * </p>
+     * <p>Returns the major version of the semantic version in case of a
+     *    valid semantic version.</p>
      *
      * @throws InvalidSemanticVersionException
      *         in case of an erroneous semantic version
@@ -110,27 +113,33 @@ public interface SemVer {
     }
 
     /**
-     * <p>
-     *      Checks if the instance represents a valid semantic version or not.
-     * </p>
+     * <p>Checks if the instance represents a valid semantic version or not.</p>
      *
-     *
-     * @return {@link true} if the instance represents a valid semantic version, otherwise
-     *         {@link false}.
+     * @return {@code true} if the instance represents a valid semantic version, otherwise
+     *         {@code false}.
      */
     default boolean isValid() {
         return getErrorLocation().isEmpty();
     }
 
     /**
-     * <p>
-     *      Returns the location of where in case of an erroneous semantic version.
-     * </p>
+     * <p>Checks if the instance represents an invalid semantic version or not </p>
+     *
+     * @return {@code true} if the instance represents an invalid semantic version, otherwise
+     *         {@code false}.
+     */
+    default boolean isInvalid() {
+        return !isValid();
+    }
+
+    /**
+     * <p>Returns the location of where in case of an erroneous semantic version.</p>
      *
      * @see #isValid()
      *
-     * @return The location of the erroneous part of the sematic version in case of an invalid
+     * @return The location of the erroneous part of the semamtic version in case of an invalid
      *         semantic version, otherwise an empty {@linkplain Optional}.
      */
-    Optional<ErrorLocation> getErrorLocation();
+    @NonNull
+    Optional<SemanticVersionNumberElement> getErrorLocation();
 }

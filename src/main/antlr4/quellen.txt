@@ -1,3 +1,0 @@
-
-https://stackoverflow.com/questions/18132078/handling-errors-in-antlr4/18139305#18139305
-https://stackoverflow.com/questions/18132078/handling-errors-in-antlr4

@@ -1,0 +1,3 @@
+= Semiofficial Testdata
+
+This set of testdata has been taken from the set of valid and invalid semantic version numbers used by semver.org to link to regex101.com
