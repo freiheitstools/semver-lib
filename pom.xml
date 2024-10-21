@@ -57,7 +57,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <excludePackageNames>io.github.freiheitsgrade.semver.parser.implementation</excludePackageNames>
+                    <excludePackageNames>io.github.freiheitstools.semver.parser.implementation</excludePackageNames>
                     <doctitle>SemVer Parser API</doctitle>
                     <source>${lsv.java-language-level}</source>
                     <quiet>true</quiet>
