@@ -137,7 +137,32 @@
         <license>
             <name>Apache-2.0</name>
             <url>https://www.apache.org/licenses/LICENSE-2.0</url>
-            <distribution></distribution>
         </license>
     </licenses>
+
+    <scm>
+        <url>https://github.com/freiheitstools/semver-lib</url>
+    </scm>
+
+    <issueManagement>
+        <url>https://github.com/freiheitstools/semver-lib/issues</url>
+        <system>GitHub</system>
+    </issueManagement>
+
+    <developers>
+        <developer>
+            <name>Oliver B. Fischer</name>
+            <email>oliver.fischer@freiheitsgrade.consulting</email>
+            <roles>
+                <role>project lead</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <description>
+        The Semantic Version Parser Library offers all functions to parse, manipulate, and build
+        semantic version numbers with Java.
+    </description>
+
+    <inceptionYear>2024</inceptionYear>
 </project>
