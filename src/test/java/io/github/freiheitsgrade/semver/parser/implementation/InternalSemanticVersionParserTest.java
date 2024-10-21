@@ -94,9 +94,9 @@ class InternalSemanticVersionParserTest {
     @CsvFileSource(resources = "/dataset/semantic-versions-valid-only-core.csv", useHeadersInDisplayName = true)
     @ParameterizedTest
     void validSemanticVersionNumbersWithoutPreReleaseAndBuildAreParsedProperly(String givenSemanticVersion,
-                                                                               String expectedMajorNumber,
-                                                                               String expectedMinorNumber,
-                                                                               String expectedPatchNumber) {
+                                                                               Integer expectedMajorNumber,
+                                                                               Integer expectedMinorNumber,
+                                                                               Integer expectedPatchNumber) {
         SemVer result = classUnderTest.parse(givenSemanticVersion);
 
         assertSoftly(softly -> {
@@ -114,9 +114,9 @@ class InternalSemanticVersionParserTest {
     @ParameterizedTest
     @Timeout(1)
     void validSemanticVersionNumbersWithPreReleaseAreParsedProperly(String givenSemanticVersion,
-                                                                    String expectedMajorNumber,
-                                                                    String expectedMinorNumber,
-                                                                    String expectedPatchNumber,
+                                                                    Integer expectedMajorNumber,
+                                                                    Integer expectedMinorNumber,
+                                                                    Integer expectedPatchNumber,
                                                                     String expectedPreRelease) {
         SemVer result = classUnderTest.parse(givenSemanticVersion);
 
@@ -135,9 +135,9 @@ class InternalSemanticVersionParserTest {
     @CsvFileSource(resources = "/dataset/semantic-versions-valid-with-build.csv", useHeadersInDisplayName = true)
     @ParameterizedTest
     void validSemanticVersionNumbersWithBuildAreParsedProperly(String givenSemanticVersion,
-                                                               String expectedMajorNumber,
-                                                               String expectedMinorNumber,
-                                                               String expectedPatchNumber,
+                                                               Integer expectedMajorNumber,
+                                                               Integer expectedMinorNumber,
+                                                               Integer expectedPatchNumber,
                                                                String expectedBuild) {
         SemVer result = classUnderTest.parse(givenSemanticVersion);
 
@@ -162,9 +162,9 @@ class InternalSemanticVersionParserTest {
 
         assertSoftly(softly -> {
             softly.assertThat(result.isValid()).isTrue();
-            softly.assertThat(result.getMajor()).isEqualTo("1");
-            softly.assertThat(result.getMinor()).isEqualTo("2");
-            softly.assertThat(result.getPatch()).isEqualTo("3");
+            softly.assertThat(result.getMajor()).isEqualTo(1);
+            softly.assertThat(result.getMinor()).isEqualTo(2);
+            softly.assertThat(result.getPatch()).isEqualTo(3);
             softly.assertThat(result.hasBuild()).isFalse();
             softly.assertThat(result.getBuild()).isEmpty();
             softly.assertThat(result.hasPreRelease()).isFalse();

@@ -16,14 +16,13 @@ class SemVerImpl implements SemVer {
     private SemanticVersionNumberElement errorLocation = null;
     private String build;
 
-    @NonNull
     @Override
-    public String getMajor() {
+    public Integer getMajor() {
         if (isInvalid()) {
             throw new InvalidSemanticVersionException(getSemanticVersion());
         }
 
-        return majorVersion;
+        return Integer.valueOf(majorVersion);
     }
 
     /* todo rm public */ public
@@ -32,14 +31,13 @@ class SemVerImpl implements SemVer {
     }
 
 
-    @NonNull
     @Override
-    public  String getMinor() {
+    public Integer getMinor() {
         if (isInvalid()) {
             throw new InvalidSemanticVersionException(getSemanticVersion());
         }
 
-        return minorVersion;
+        return Integer.valueOf(minorVersion);
     }
 
 
@@ -47,14 +45,13 @@ class SemVerImpl implements SemVer {
         this.minorVersion = minorVersion;
     }
 
-    @NonNull
     @Override
-    public String getPatch() {
+    public Integer getPatch() {
         if (isInvalid()) {
             throw new InvalidSemanticVersionException(getSemanticVersion());
         }
 
-        return patchVersion;
+        return Integer.valueOf(patchVersion);
     }
 
     void setPatchVersion(@NonNull String patchVersion) {

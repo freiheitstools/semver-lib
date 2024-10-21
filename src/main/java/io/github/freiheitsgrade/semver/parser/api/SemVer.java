@@ -13,43 +13,34 @@ public interface SemVer {
 
     /**
      * <p>Returns the major version of the semantic version in case of a
-     *    valid semantic version.</p>
-     *
-     * @throws InvalidSemanticVersionException
-     *         in case of an erroneous semantic version
+     * valid semantic version.</p>
      *
      * @return the major version, never {@code null}
+     * @throws InvalidSemanticVersionException in case of an erroneous semantic version
      */
-    @NonNull
-    String getMajor();
+    Integer getMajor();
 
     /**
      * <p>
-     *     Returns the minor version of the semantic version in case of a
-     *     valid semantic version.
+     * Returns the minor version of the semantic version in case of a
+     * valid semantic version.
      * </p>
-     *
-     * @throws InvalidSemanticVersionException
-     *         in case of an erroneous semantic version
      *
      * @return the minor version, never {@code null}
+     * @throws InvalidSemanticVersionException in case of an erroneous semantic version
      */
-    @NonNull
-    String getMinor();
+    Integer getMinor();
 
     /**
      * <p>
-     *     Returns the patch version of the semantic version in case of a
-     *     valid semantic version.
+     * Returns the patch version of the semantic version in case of a
+     * valid semantic version.
      * </p>
      *
-     * @throws InvalidSemanticVersionException
-     *         in case of an erroneous semantic version
-     *
      * @return the patch “version, never {@code null}
+     * @throws InvalidSemanticVersionException in case of an erroneous semantic version
      */
-    @NonNull
-    String getPatch();
+    Integer getPatch();
 
     /**
      * Returns the given semantic version as it is, independent if it is valid
