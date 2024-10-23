@@ -1,5 +1,7 @@
 package io.github.freiheitstools.semver.parser.api;
 
+import io.github.freiheitstools.semver.parser.implementation.InternalSemanticVersionParser;
+import io.github.freiheitstools.semver.parser.implementation.SemVerBuilderImpl;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Optional;
@@ -133,4 +135,23 @@ public interface SemVer {
      */
     @NonNull
     Optional<SemanticVersionNumberElement> getErrorLocation();
+
+    /**
+     * Returns a new {@link SemVerBuilder builder instance} to build a new semantic version
+     * based on an existing semantic version or from scratch.
+     *
+     * @return a new instance of {@linkplain SemVerBuilder}
+     */
+    static SemVerBuilder builder() {
+        return new SemVerBuilderImpl();
+    }
+
+    /**
+     * Returns a new {@link SemVerParser parser instance} to parse semantic version from a string.
+     *
+     * @return a new instance of {@linkplain SemVerParser}
+     */
+    static SemVerParser parser() {
+        return new InternalSemanticVersionParser();
+    }
 }

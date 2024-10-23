@@ -16,12 +16,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  *
  * @see <a href="https://semver.org">Semantic Version Specification</a>
  */
-public class SemVerParser {
-    /**
-     * Creates a new instance of the parser
-     */
-    public SemVerParser() {
-    }
+public interface SemVerParser {
 
     /**
      * Parses a given string as semantic version number and returns a {@linkplain SemVer} instance,
@@ -31,10 +26,5 @@ public class SemVerParser {
      * @return {@linkplain SemVer} instance representing the given semantic version, never {@code null}
      * @throws IllegalArgumentException if the given semantic version is longer then 2.048 characters
      */
-    public @NonNull SemVer parse(String semanticVersion)
-        throws IllegalArgumentException {
-        InternalSemanticVersionParser internalParser = new InternalSemanticVersionParser();
-
-        return internalParser.parse(semanticVersion);
-    }
+    @NonNull SemVer parse(String semanticVersion);
 }

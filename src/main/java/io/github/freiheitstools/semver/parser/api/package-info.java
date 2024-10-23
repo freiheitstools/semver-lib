@@ -1,10 +1,10 @@
 /**
  * Public API of the parser for semantic versioning.
  *
- * <h2>Usage Example</h2>
+ * <h2>Usage Examples</h2>
  * <h3>Parsing a given Semantic Version</h3>
  * <pre>{@code
- * SemVerParser parser = new SemVerParser();
+ * SemVerParser parser = SemVer.parser();
  *
  * SemVer semver = parser.parse("1.2.3-SNAPSHOT+23");
  *
@@ -19,5 +19,22 @@
  *     semver.getBuild().ifPresent(System.out::println);
  * }
  * }</pre>
+ *
+ * <h3>Building a new Semantic Version from an existing one</h3>
+ * <pre>{@code
+ * SemVerParser parser = SemVer.parser();
+ * SemVer semVer = parser.parse("1.2.3-SNAPSHOT");
+ *
+ * SemVer nextSemVer = SemVer.builder().startFrom(semVer)
+ *                           .removePrerelease().build();
+ * }</pre>
+ *
+ * <h3>Building a new Semantic Version from scratch</h3>
+ * <pre>{@code
+ * SemVer nextSemVer = SemVer.builder().startFrom(1, 2, 0)
+ *                           .setPrerelease("SNAPSHOT")
+ *                           .build();
+ * }</pre>
+ *
  */
 package io.github.freiheitstools.semver.parser.api;

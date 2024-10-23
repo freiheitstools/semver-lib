@@ -6,6 +6,7 @@ import io.github.freiheitstools.semver.parser.api.SemanticVersionNumberElement;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 class SemVerImpl implements SemVer {
     private String majorVersion;
@@ -96,6 +97,8 @@ class SemVerImpl implements SemVer {
         sb.append(getMajor()).append(".");
         sb.append(getMinor()).append(".");
         sb.append(getPatch());
+        getPreRelease().ifPresent(identifier -> sb.append("-").append(identifier));
+        getBuild().ifPresent(identifier -> sb.append("+").append(identifier));
 
         return sb.toString();
     }

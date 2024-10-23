@@ -6,6 +6,7 @@
     <version>0.1.0-SNAPSHOT</version>
     <name>Semantic Versioning Parser</name>
     <url>https://github.com/freiheitstools/semver-parser</url>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--

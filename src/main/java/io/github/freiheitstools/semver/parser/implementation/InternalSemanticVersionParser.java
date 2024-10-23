@@ -1,16 +1,18 @@
 package io.github.freiheitstools.semver.parser.implementation;
 
 import io.github.freiheitstools.semver.parser.api.SemVer;
+import io.github.freiheitstools.semver.parser.api.SemVerParser;
 import io.github.freiheitstools.semver.parser.api.SemanticVersionNumberElement;
 import org.apache.commons.lang3.StringUtils;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import static io.github.freiheitstools.semver.parser.implementation.CharacterSets.TERMINAL_SIGNAL;
 
 /** todo Klasse umbenennen ohne 2  */
-public class InternalSemanticVersionParser {
+public class InternalSemanticVersionParser implements SemVerParser {
     public static final int MAX_LENGTH = 2_048;
 
-    public SemVer parse(String semanticVersion) throws IllegalArgumentException {
+    public @NonNull SemVer parse(String semanticVersion) throws IllegalArgumentException {
         if (StringUtils.length(semanticVersion) > MAX_LENGTH) {
             String message = """
                 The given semantic version exceeds the maximum allowed length of %d characters
@@ -52,7 +54,6 @@ public class InternalSemanticVersionParser {
             semVer.setErrorLocation(errorLocation);
         }
 
-semVer.setPatchVersion(null);
         parsedElements.getResult(SemanticVersionNumberElement.MAJOR_VERSION).ifPresent(semVer::setMajorVersion);
         parsedElements.getResult(SemanticVersionNumberElement.MINOR_VERSION).ifPresent(semVer::setMinorVersion);
         parsedElements.getResult(SemanticVersionNumberElement.PATCH_VERSION).ifPresent(semVer::setPatchVersion);

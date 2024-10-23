@@ -1,0 +1,45 @@
+startSemVer,        Operation,               valueForOperation,     expectedResult
+1.1.1,              NEXT_MAJOR_AND_RESET,   ,                       2.0.0
+1.1.1-A,            NEXT_MAJOR_AND_RESET,   ,                       2.0.0
+1.1.1+B,            NEXT_MAJOR_AND_RESET,   ,                       2.0.0
+1.1.1-A+B,          NEXT_MAJOR_AND_RESET,   ,                       2.0.0
+
+1.1.1,              NEXT_MAJOR,             ,                       2.0.0
+1.1.1-A,            NEXT_MAJOR,             ,                       2.0.0-A
+1.1.1+B,            NEXT_MAJOR,             ,                       2.0.0+B
+1.1.1-A+B,          NEXT_MAJOR,             ,                       2.0.0-A+B
+
+1.1.1,              NEXT_MINOR_AND_RESET,   ,                       1.2.0
+1.1.1-A,            NEXT_MINOR_AND_RESET,   ,                       1.2.0
+1.1.1+B,            NEXT_MINOR_AND_RESET,   ,                       1.2.0
+1.1.1-A+B,          NEXT_MINOR_AND_RESET,   ,                       1.2.0
+
+1.1.1,              NEXT_MINOR,             ,                       1.2.0
+1.1.1-A,            NEXT_MINOR,             ,                       1.2.0-A
+1.1.1+B,            NEXT_MINOR,             ,                       1.2.0+B
+1.1.1-A+B,          NEXT_MINOR,             ,                       1.2.0-A+B
+
+1.1.1,              NEXT_PATCH_AND_RESET,   ,                       1.1.2
+1.1.1-A,            NEXT_PATCH_AND_RESET,   ,                       1.1.2
+1.1.1+B,            NEXT_PATCH_AND_RESET,   ,                       1.1.2
+1.1.1-A+B,          NEXT_PATCH_AND_RESET,   ,                       1.1.2
+
+1.1.1,              NEXT_PATCH,             ,                       1.1.2
+1.1.1-A,            NEXT_PATCH,             ,                       1.1.2-A
+1.1.1+B,            NEXT_PATCH,             ,                       1.1.2+B
+1.1.1-A+B,          NEXT_PATCH,             ,                       1.1.2-A+B
+
+1.1.1-A+B,          SET_MAJOR,              9,                      9.1.1-A+B
+1.1.1-A+B,          SET_MINOR,              9,                      1.9.1-A+B
+1.1.1-A+B,          SET_PATCH,              9,                      1.1.9-A+B
+
+1.1.1-A+B,          DROP_PRERELEASE,        ,                       1.1.1+B
+1.1.1-A+B,          DROP_BUILD,             ,                       1.1.1-A
+
+1.1.1,              SET_PRERELEASE,         X,                      1.1.1-X
+1.1.1-A,            SET_PRERELEASE,         X,                      1.1.1-X
+1.1.1-A+B,          SET_PRERELEASE,         X,                      1.1.1-X+B
+
+1.1.1,              SET_BUILD,              X,                      1.1.1+X
+1.1.1+B,            SET_BUILD,              X,                      1.1.1+X
+1.1.1-A+B,          SET_BUILD,              X,                      1.1.1-A+X
