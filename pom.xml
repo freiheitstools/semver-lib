@@ -17,7 +17,7 @@
         <lsm.buildplan-maven-plugin.version>2.2.2</lsm.buildplan-maven-plugin.version>
         <lsm.checkerframework.version>3.48.1</lsm.checkerframework.version>
         <lsm.commons-lang3.version>3.17.0</lsm.commons-lang3.version>
-        <lsm.junit.version>5.11.2</lsm.junit.version>
+        <lsm.junit.version>5.11.3</lsm.junit.version>
         <lsm.maven-javadoc-plugin.version>3.10.1</lsm.maven-javadoc-plugin.version>
         <lsm.maven-surefire-plugin.version>3.5.1</lsm.maven-surefire-plugin.version>
         <lsv.java-language-level>22</lsv.java-language-level>
