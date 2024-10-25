@@ -22,7 +22,7 @@
         <lsm.maven-surefire-plugin.version>3.5.1</lsm.maven-surefire-plugin.version>
         <lsv.java-language-level>22</lsv.java-language-level>
         <lsv.maven-compiler-plugin.version>3.13.0</lsv.maven-compiler-plugin.version>
-        <lsm.maven-source-plugin.version>2.2.1</lsm.maven-source-plugin.version>
+        <lsm.maven-source-plugin.version>3.3.1</lsm.maven-source-plugin.version>
         <lsm.maven-gpg-plugin.version>3.2.7</lsm.maven-gpg-plugin.version>
         <lsv.central-publishing-maven-plugin.version>0.6.0</lsv.central-publishing-maven-plugin.version>
     </properties>
