@@ -14,17 +14,24 @@
          ! therefore the Maven Deploy Plugin has been disabled to avoid any issues
          !-->
         <maven.deploy.skip>true</maven.deploy.skip>
-        <lsm.buildplan-maven-plugin.version>2.2.2</lsm.buildplan-maven-plugin.version>
-        <lsm.checkerframework.version>3.48.1</lsm.checkerframework.version>
-        <lsm.commons-lang3.version>3.17.0</lsm.commons-lang3.version>
-        <lsm.junit.version>5.11.3</lsm.junit.version>
-        <lsm.maven-javadoc-plugin.version>3.10.1</lsm.maven-javadoc-plugin.version>
-        <lsm.maven-surefire-plugin.version>3.5.1</lsm.maven-surefire-plugin.version>
-        <lsv.java-language-level>22</lsv.java-language-level>
-        <lsv.maven-compiler-plugin.version>3.13.0</lsv.maven-compiler-plugin.version>
-        <lsm.maven-source-plugin.version>3.3.1</lsm.maven-source-plugin.version>
-        <lsm.maven-gpg-plugin.version>3.2.7</lsm.maven-gpg-plugin.version>
-        <lsv.central-publishing-maven-plugin.version>0.6.0</lsv.central-publishing-maven-plugin.version>
+
+        <!-- USE THE PREFIX svp for all project specific Maven properties!!!!
+         !   s    emantic
+         !   v    ersion
+         !   p    arser
+         !-->
+        <svp.buildplan-maven-plugin.version>2.2.2</svp.buildplan-maven-plugin.version>
+        <svp.checkerframework.version>3.48.1</svp.checkerframework.version>
+        <svp.commons-lang3.version>3.17.0</svp.commons-lang3.version>
+        <svp.junit.version>5.11.3</svp.junit.version>
+        <svp.maven-javadoc-plugin.version>3.10.1</svp.maven-javadoc-plugin.version>
+        <svp.maven-surefire-plugin.version>3.5.1</svp.maven-surefire-plugin.version>
+        <svp.java-language-level>22</svp.java-language-level>
+        <svp.maven-compiler-plugin.version>3.13.0</svp.maven-compiler-plugin.version>
+        <svp.maven-source-plugin.version>3.3.1</svp.maven-source-plugin.version>
+        <svp.maven-gpg-plugin.version>3.2.7</svp.maven-gpg-plugin.version>
+        <svp.central-publishing-maven-plugin.version>0.6.0</svp.central-publishing-maven-plugin.version>
+        <svp.assertj-core.version>3.26.3</svp.assertj-core.version>
     </properties>
 
 
@@ -35,10 +42,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${lsv.maven-compiler-plugin.version}</version>
+                <version>${svp.maven-compiler-plugin.version}</version>
                 <configuration>
-                    <release>${lsv.java-language-level}</release>
-                    <testRelease>${lsv.java-language-level}</testRelease>
+                    <release>${svp.java-language-level}</release>
+                    <testRelease>${svp.java-language-level}</testRelease>
                 </configuration>
             </plugin>
             <plugin>
@@ -55,7 +62,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${lsm.maven-javadoc-plugin.version}</version>
+                <version>${svp.maven-javadoc-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>package-javadoc</id>
@@ -69,7 +76,7 @@
                 <configuration>
                     <excludePackageNames>io.github.freiheitstools.semver.parser.implementation</excludePackageNames>
                     <doctitle>SemVer Parser API</doctitle>
-                    <source>${lsv.java-language-level}</source>
+                    <source>${svp.java-language-level}</source>
                     <quiet>true</quiet>
                     <notimestamp>true</notimestamp>
                     <validateLinks>true</validateLinks>
@@ -96,21 +103,21 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>buildplan-maven-plugin</artifactId>
-                    <version>${lsm.buildplan-maven-plugin.version}</version>
+                    <version>${svp.buildplan-maven-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${lsm.maven-surefire-plugin.version}</version>
+                    <version>${svp.maven-surefire-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>${lsm.maven-source-plugin.version}</version>
+                    <version>${svp.maven-source-plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.sonatype.central</groupId>
                     <artifactId>central-publishing-maven-plugin</artifactId>
-                    <version>${lsv.central-publishing-maven-plugin.version}</version>
+                    <version>${svp.central-publishing-maven-plugin.version}</version>
                     <extensions>true</extensions>
                     <configuration>
                         <publishingServerId>central</publishingServerId>
@@ -119,7 +126,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-gpg-plugin</artifactId>
-                    <version>${lsm.maven-gpg-plugin.version}</version>
+                    <version>${svp.maven-gpg-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -130,25 +137,25 @@
             <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
-                <version>3.26.3</version>
+                <version>${svp.assertj-core.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
-                <version>${lsm.junit.version}</version>
+                <version>${svp.junit.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
-                <version>${lsm.commons-lang3.version}</version>
+                <version>${svp.commons-lang3.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.checkerframework</groupId>
                 <artifactId>checker-qual</artifactId>
-                <version>${lsm.checkerframework.version}</version>
+                <version>${svp.checkerframework.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
