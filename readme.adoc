@@ -1,0 +1,71 @@
+= Semantic Versioning Parser
+
+image:https://javadoc.io/badge2/io.github.freiheitstools.semver.parser/parser/javadoc.svg[]
+image:https://img.shields.io/maven-central/v/io.github.freiheitstools.semver.parser/parser[link="https://central.sonatype.com/search?namespace=io.github.freiheitstools.semver.parser"]
+image:https://github.com/freiheitstools/semver-lib/actions/workflows/build-and-test.yaml/badge.svg?branch=baseline/0.1/development["GitHub Actions Status", link="https://github.com/freiheitstools/semver-lib/actions/workflows/build-and-test.yaml"]
+
+'''
+
+The _Semantic Versioning Parser_ is Java library for parsing and building semantic versions according to the https://semver.org/[Semantic Version Specification].
+
+== Maven Dependency
+
+.Maven Dependency Declartion for the library
+[source,xml]
+----
+<dependency>
+    <groupId>io.github.freiheitstools.semver.parser</groupId>
+    <artifactId>parser</artifactId>
+    <version>0.1.0</version>
+</dependency>
+----
+
+Please check afterward for the latest version by running the following Maven command:
+
+.Use Maven to check for the latest Maven version
+[source]
+----
+mvn versions:display-dependency-updates \
+  -DdependencyIncludes="io.github.freiheitstools.semver.parser:parser"
+----
+
+== Usage Examples
+
+.Parsing a given Semantic Version
+[source,java]
+----
+ SemVerParser parser = SemVer.parser();
+
+ SemVer semver = parser.parse("1.2.3-SNAPSHOT+23");
+
+ if (semver.isInvalid()) {
+    System.out.println("Given semantic version is not valid");
+ } else {
+    System.out.println(semver.getMajor());
+    System.out.println(semver.getMinor());
+    System.out.println(semver.getPatch());
+
+    semver.getPreRelease().ifPresent(System.out::println);
+    semver.getBuild().ifPresent(System.out::println);
+ }
+----
+
+.Building a new Semantic Version from an existing one
+[source,java]
+----
+SemVerParser parser = SemVer.parser();
+SemVer semVer = parser.parse("1.2.3-SNAPSHOT");
+
+SemVer nextSemVer = SemVer.builder().startFrom(semVer)
+                          .removePrerelease()
+                          .build();
+
+----
+
+.Building a new Semantic Version from scratch
+[source,java]
+----
+SemVer nextSemVer = SemVer.builder().startFrom(1, 2, 0)
+                          .setPrerelease("SNAPSHOT")
+                          .build();
+----
