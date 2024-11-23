@@ -47,7 +47,7 @@ public class InternalSemanticVersionParser implements SemVerParser {
             // ignore
         }
 
-        State finalState = transitionTable.getReachedStates().getLast();
+        State finalState = transitionTable.getReachedStates().get(transitionTable.getReachedStates().size() - 1);
 
         if (finalState.isErrorState()) {
             SemanticVersionNumberElement errorLocation = errorLocationMapping.getLocationByState(finalState);
