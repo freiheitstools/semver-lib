@@ -89,7 +89,7 @@ class SemVerFiniteStateTransitionTableTest {
             // Ignore
         }
 
-        State finalState = classUnderTest.getReachedStates().getLast();
+        State finalState = classUnderTest.getReachedStates().get(classUnderTest.getReachedStates().size() - 1);
 
         assertThat(finalState.isErrorState())
                 .as("State %s is not an final error state", finalState)
