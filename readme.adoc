@@ -70,3 +70,10 @@ SemVer nextSemVer = SemVer.builder().startFrom(1, 2, 0)
                           .setPrerelease("SNAPSHOT")
                           .build();
 ----
+
+== Versioning of the Library
+
+The versioning of the Semantic Versioning Parser takes place according to the principles of https://semver.org[Semantic Versioning^].
+This means that the version of a release is only a statement on compatibility, not of functionality.
+
+As every good open source project, it is never complete.
