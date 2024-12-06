@@ -9,7 +9,7 @@ on:
 
 jobs:
     build-and-test:
-        name: 'xxxBuild and Test'
+        name: 'Build and Test'
         strategy:
             matrix:
                 version: [22, 23]
