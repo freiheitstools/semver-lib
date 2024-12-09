@@ -24,7 +24,7 @@
         <svp.checkerframework.version>3.48.3</svp.checkerframework.version>
         <svp.commons-lang3.version>3.17.0</svp.commons-lang3.version>
         <svp.junit.version>5.11.3</svp.junit.version>
-        <svp.maven-javadoc-plugin.version>3.11.1</svp.maven-javadoc-plugin.version>
+        <svp.maven-javadoc-plugin.version>3.11.2</svp.maven-javadoc-plugin.version>
         <svp.maven-surefire-plugin.version>3.5.2</svp.maven-surefire-plugin.version>
         <svp.java-language-level>17</svp.java-language-level>
         <svp.maven-compiler-plugin.version>3.13.0</svp.maven-compiler-plugin.version>
