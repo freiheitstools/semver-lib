@@ -21,7 +21,7 @@
          !   p    arser
          !-->
         <svp.buildplan-maven-plugin.version>2.2.2</svp.buildplan-maven-plugin.version>
-        <svp.checkerframework.version>3.48.4</svp.checkerframework.version>
+        <svp.checkerframework.version>3.49.0</svp.checkerframework.version>
         <svp.commons-lang3.version>3.17.0</svp.commons-lang3.version>
         <svp.junit.version>5.11.4</svp.junit.version>
         <svp.maven-javadoc-plugin.version>3.11.2</svp.maven-javadoc-plugin.version>
