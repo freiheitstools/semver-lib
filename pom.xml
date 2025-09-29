@@ -22,7 +22,7 @@
          !-->
         <svp.buildplan-maven-plugin.version>2.2.2</svp.buildplan-maven-plugin.version>
         <svp.checkerframework.version>3.51.0</svp.checkerframework.version>
-        <svp.commons-lang3.version>3.18.0</svp.commons-lang3.version>
+        <svp.commons-lang3.version>3.19.0</svp.commons-lang3.version>
         <svp.junit.version>5.13.4</svp.junit.version>
         <svp.maven-javadoc-plugin.version>3.12.0</svp.maven-javadoc-plugin.version>
         <svp.maven-surefire-plugin.version>3.5.4</svp.maven-surefire-plugin.version>
