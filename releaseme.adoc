@@ -1,0 +1,76 @@
+= Release me!
+
+[abstract]
+Release me! is the official documentation of how to release SemVer Lib to Maven Central Repository.
+
+[#_preparation]
+== Preparation
+
+Ensure your used `settings.xml` contains the credentials for the Maven Central Repository.
+`settings.xml` should contain an `server` element with the Id `central` similar to the following example below.
+
+.Example of the `server` element for Maven Central Repository
+[source,xml]
+----
+<server>
+    <id>${server}</id>
+    <username>A8Jd93O</username>
+    <password>dRcaso9wa8rh4oYLxCNpr9KmeSsIWhhU</password>
+</server>
+----
+
+The username and password are tokens issued by the Maven Central Repository portal.
+They may have a limited lifetime and may already have expired.
+
+If you encounter a 401 error while releasing the Maven Central, you must update your tokens according to the instructions in https://central.sonatype.org/publish/generate-portal-token/[Generating a Portal Token for Publishing (Sonartype Documentation)].
+
+1. Login to https://central.sonatype.org/pages/ossrh-eol/#process-to-migrate
+
+
+https://central.sonatype.org/publish/publish-portal-maven/#usage
+
+
+
+Toke erzueigen
+ und in settings.xml einsetzen
+
+<server>
+<id>${server}</id>
+<username>7U6SBO</username>
+<password>dRcaso9wn8rh4oYLxCNprR9KmVSsIWhhU</password>
+</server>
+
+
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+
+    <localRepository>/opt/mavencache/</localRepository>
+
+    <mirrors>
+    </mirrors>
+
+    <servers>
+
+    <server>
+        <id>central</id>
+        <username>7U6SBO</username>
+        <password>dRcaso9wn8rh4oYLxCNprR9KmVSsIWhhU</password>
+    </server>
+    </servers>
+
+    <profiles>
+    </profiles>
+
+    <proxies>
+    </proxies>
+
+
+
+    <activeProfiles>
+    </activeProfiles>
+</settings>
+
+
+
