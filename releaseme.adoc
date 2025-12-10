@@ -24,53 +24,7 @@ They may have a limited lifetime and may already have expired.
 
 If you encounter a 401 error while releasing the Maven Central, you must update your tokens according to the instructions in https://central.sonatype.org/publish/generate-portal-token/[Generating a Portal Token for Publishing (Sonartype Documentation)].
 
-1. Login to https://central.sonatype.org/pages/ossrh-eol/#process-to-migrate
 
-
-https://central.sonatype.org/publish/publish-portal-maven/#usage
-
-
-
-Toke erzueigen
- und in settings.xml einsetzen
-
-<server>
-<id>${server}</id>
-<username>7U6SBO</username>
-<password>dRcaso9wn8rh4oYLxCNprR9KmVSsIWhhU</password>
-</server>
-
-
-<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
-
-
-    <localRepository>/opt/mavencache/</localRepository>
-
-    <mirrors>
-    </mirrors>
-
-    <servers>
-
-    <server>
-        <id>central</id>
-        <username>7U6SBO</username>
-        <password>dRcaso9wn8rh4oYLxCNprR9KmVSsIWhhU</password>
-    </server>
-    </servers>
-
-    <profiles>
-    </profiles>
-
-    <proxies>
-    </proxies>
-
-
-
-    <activeProfiles>
-    </activeProfiles>
-</settings>
-
+mvn -P release
 
 
