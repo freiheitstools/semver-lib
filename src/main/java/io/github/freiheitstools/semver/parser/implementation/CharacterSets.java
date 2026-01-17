@@ -1,11 +1,11 @@
 package io.github.freiheitstools.semver.parser.implementation;
 
 /**
- * Definition of character groups like alphanumeric characters or digits used in the grammatic for
- * semantic version numbers.
+ * Definition of character groups like alphanumeric characters or digits as used in the grammatic for
+ * semantic versioning.
  */
-class CharacterSets {
-    static char TERMINAL_SIGNAL = 0x0;
+final class CharacterSets {
+    final static char TERMINAL_SIGNAL = 0x0;
 
     final static String DIGITS = "0123456789";
     final static String DOT = ".";
