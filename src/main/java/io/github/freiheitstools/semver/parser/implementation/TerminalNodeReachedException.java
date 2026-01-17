@@ -1,5 +1,9 @@
 package io.github.freiheitstools.semver.parser.implementation;
 
+/**
+ * Exception thrown when a terminal state is reached during state machine processing
+ * while input is still available.
+ */
 class TerminalNodeReachedException extends RuntimeException {
 
     private final State state;

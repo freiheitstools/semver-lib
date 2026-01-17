@@ -3,11 +3,12 @@ package io.github.freiheitstools.semver.parser.implementation;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/*
-    todo Der Name muss angepasst werden wegen dem negativen bla bla bla
+/**
+ * Represents a set of characters that are valid for triggering a transition
+ * in a state machine during the parsing of a semantic version.
  */
 class TransitionCharSet {
-    private char[] validChars;
+    private final char[] validChars;
 
     public TransitionCharSet(char[] validChars) {
         this.validChars = validChars;
