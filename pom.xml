@@ -63,7 +63,7 @@
         <svp.maven-source-plugin.version>3.4.0</svp.maven-source-plugin.version>
         <svp.maven-gpg-plugin.version>3.2.8</svp.maven-gpg-plugin.version>
         <svp.central-publishing-maven-plugin.version>0.10.0</svp.central-publishing-maven-plugin.version>
-        <svp.assertj-core.version>3.27.6</svp.assertj-core.version>
+        <svp.assertj-core.version>3.27.7</svp.assertj-core.version>
         <svp.spotless.version>3.2.1</svp.spotless.version>
     </properties>
 
