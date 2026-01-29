@@ -1,6 +1,18 @@
 package io.github.freiheitstools.semver.parser.implementation;
 
 enum State {
+    END_OF_SEMVER,
+
+    ERROR_BUILD(true),
+
+    ERROR_MAJOR_VERSION(true),
+
+    ERROR_MINOR_VERSION(true),
+
+    ERROR_PATCH_NUMBER(true),
+
+    ERROR_PRERELEASE(true),
+
     S00_START,
 
     /**
@@ -9,14 +21,15 @@ enum State {
     S01_MAJOR_STARTS_WITH_ZERO,
 
     /**
-     * The state that follows {@linkplain #S00_START} or {@linkplain #S02_MAJOR_STARTS_WITH_POSITIVE_DIGIT}
-     * when a positive digit is received
+     * The state that follows {@linkplain #S00_START} or
+     * {@linkplain #S02_MAJOR_STARTS_WITH_POSITIVE_DIGIT} when a positive digit is
+     * received
      */
     S02_MAJOR_STARTS_WITH_POSITIVE_DIGIT,
 
     /**
-     * The state that follows {@linkplain #S02_MAJOR_STARTS_WITH_POSITIVE_DIGIT} or {@linkplain #S01_MAJOR_STARTS_WITH_ZERO}
-     * then a dot is received
+     * The state that follows {@linkplain #S02_MAJOR_STARTS_WITH_POSITIVE_DIGIT} or
+     * {@linkplain #S01_MAJOR_STARTS_WITH_ZERO} then a dot is received
      */
     S03_DOT_AFTER_MAJOR_NUMBER,
 
@@ -48,27 +61,14 @@ enum State {
 
     S17_BUILD_AFTER_ALPHANUM(),
 
-    S18_BUILD_DOT_IN_BUILD,
-
-    END_OF_SEMVER,
-
-    ERROR_MAJOR_VERSION(true),
-
-    ERROR_MINOR_VERSION(true),
-
-    ERROR_PATCH_NUMBER(true),
-
-    ERROR_PRERELEASE(true),
-
-    ERROR_BUILD(true);
+    S18_BUILD_DOT_IN_BUILD;
 
     private boolean isErrorState = false;
 
+    State() {}
+
     State(boolean isErrorState) {
         this.isErrorState = isErrorState;
-    }
-
-    State() {
     }
 
     public boolean isErrorState() {

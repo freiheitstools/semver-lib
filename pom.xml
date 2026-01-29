@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project>
     <modelVersion>4.0.0</modelVersion>
 
@@ -5,7 +6,38 @@
     <artifactId>parser</artifactId>
     <version>1.1.0-SNAPSHOT</version>
     <name>Semantic Versioning Parser</name>
+
+    <description>The Semantic Version Parser Library offers all functions to parse, manipulate, and build
+        semantic version numbers with Java.</description>
     <url>https://github.com/freiheitstools/semver-parser</url>
+
+    <inceptionYear>2024</inceptionYear>
+
+    <licenses>
+        <license>
+            <name>Apache-2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Oliver B. Fischer</name>
+            <email>oliver.fischer@freiheitsgrade.consulting</email>
+            <roles>
+                <role>project lead</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/freiheitstools/semver-lib</url>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/freiheitstools/semver-lib/issues</url>
+    </issueManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -32,114 +64,11 @@
         <svp.maven-gpg-plugin.version>3.2.8</svp.maven-gpg-plugin.version>
         <svp.central-publishing-maven-plugin.version>0.10.0</svp.central-publishing-maven-plugin.version>
         <svp.assertj-core.version>3.27.6</svp.assertj-core.version>
+        <svp.spotless.version>3.2.1</svp.spotless.version>
     </properties>
-
-
-    <build>
-        <defaultGoal>clean install</defaultGoal>
-
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${svp.maven-compiler-plugin.version}</version>
-                <configuration>
-                    <release>${svp.java-language-level}</release>
-                    <testRelease>${svp.java-language-level}</testRelease>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>buildplan-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>list</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${svp.maven-javadoc-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>package-javadoc</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>javadoc</goal>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <excludePackageNames>io.github.freiheitstools.semver.parser.implementation</excludePackageNames>
-                    <doctitle>SemVer Parser API</doctitle>
-                    <source>${svp.java-language-level}</source>
-                    <quiet>true</quiet>
-                    <notimestamp>true</notimestamp>
-                    <validateLinks>true</validateLinks>
-                    <doclint>all</doclint>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>buildplan-maven-plugin</artifactId>
-                    <version>${svp.buildplan-maven-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${svp.maven-surefire-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>${svp.maven-source-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.sonatype.central</groupId>
-                    <artifactId>central-publishing-maven-plugin</artifactId>
-                    <version>${svp.central-publishing-maven-plugin.version}</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <publishingServerId>central</publishingServerId>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>${svp.maven-gpg-plugin.version}</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.assertj</groupId>
-                <artifactId>assertj-core</artifactId>
-                <version>${svp.assertj-core.version}</version>
-                <scope>test</scope>
-            </dependency>
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
@@ -157,15 +86,16 @@
                 <artifactId>checker-qual</artifactId>
                 <version>${svp.checkerframework.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${svp.assertj-core.version}</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -175,18 +105,118 @@
             <artifactId>checker-qual</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
 
-    <licenses>
-        <license>
-            <name>Apache-2.0</name>
-            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
-        </license>
-    </licenses>
+    <build>
+        <defaultGoal>clean install</defaultGoal>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.diffplug.spotless</groupId>
+                    <artifactId>spotless-maven-plugin</artifactId>
+                    <version>${svp.spotless.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>${svp.maven-gpg-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${svp.maven-source-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${svp.maven-surefire-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>buildplan-maven-plugin</artifactId>
+                    <version>${svp.buildplan-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonatype.central</groupId>
+                    <artifactId>central-publishing-maven-plugin</artifactId>
+                    <version>${svp.central-publishing-maven-plugin.version}</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <publishingServerId>central</publishingServerId>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${svp.maven-compiler-plugin.version}</version>
+                <configuration>
+                    <release>${svp.java-language-level}</release>
+                    <testRelease>${svp.java-language-level}</testRelease>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${svp.maven-javadoc-plugin.version}</version>
+                <configuration>
+                    <excludePackageNames>io.github.freiheitstools.semver.parser.implementation</excludePackageNames>
+                    <doctitle>SemVer Parser API</doctitle>
+                    <source>${svp.java-language-level}</source>
+                    <quiet>true</quiet>
+                    <notimestamp>true</notimestamp>
+                    <validateLinks>true</validateLinks>
+                    <doclint>all</doclint>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>package-javadoc</id>
+                        <goals>
+                            <goal>javadoc</goal>
+                            <goal>jar</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildplan-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>list</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
     <profiles>
         <profile>
@@ -200,10 +230,10 @@
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
-                                <phase>verify</phase>
                                 <goals>
                                     <goal>sign</goal>
                                 </goals>
+                                <phase>verify</phase>
                             </execution>
                         </executions>
                     </plugin>
@@ -214,31 +244,73 @@
                 </plugins>
             </build>
         </profile>
+
+        <profile>
+            <id>run-spotless-to-check-project</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.diffplug.spotless</groupId>
+                        <artifactId>spotless-maven-plugin</artifactId>
+                        <configuration>
+                            <!--
+                             ! Order matters. In some case, e.g. the plugin order for Maven, changes to order
+                             ! might break the build!
+                             ! Oliver B. Fischer, 2026-01-29
+                             !-->
+                            <java>
+                                <eclipse>
+                                    <sortMembersEnabled>true</sortMembersEnabled>
+                                    <!-- Optional: Specify the sort order of the member categories. (default: T,SF,SI,SM,F,I,C,M)
+                                             SF,SI,SM,F,I,C,M,T = Static Fields, Static Initializers, Static Methods, Fields, Initializers, Constructors, Methods, (Nested) Types -->
+                                    <sortMembersOrder>SF,SI,SM,F,I,C,M,T</sortMembersOrder>
+                                    <!-- Optional: Enable the reordering of fields, enum constants, and initializers. (default: true) -->
+                                    <sortMembersDoNotSortFields>false</sortMembersDoNotSortFields>
+                                    <sortMembersVisibilityOrderEnabled>true</sortMembersVisibilityOrderEnabled>
+                                    <!-- Optional: Specify the ordering of members of the same category by the visibility within the category. (default: B,V,R,D)
+                                             B,R,D,V = Public, Protected, Package, Private -->
+                                    <sortMembersVisibilityOrder>B,R,D,V</sortMembersVisibilityOrder>
+
+                                </eclipse>
+
+                                <palantirJavaFormat>
+                                    <version>2.85.0</version>
+                                    <!-- optional -->
+                                    <style>PALANTIR</style>
+                                    <!-- or AOSP/GOOGLE (optional) -->
+                                    <formatJavadoc>false</formatJavadoc>
+                                    <!-- defaults to false (optional, requires at least Palantir 2.39.0) -->
+                                </palantirJavaFormat>
+                                <formatAnnotations/>
+                                <forbidWildcardImports/>
+                            </java>
+                            <pom>
+                                <sortPom>
+                                    <endWithNewline>true</endWithNewline>
+                                    <lineSeparator>\n</lineSeparator>
+                                    <nrOfIndentSpace>4</nrOfIndentSpace>
+                                    <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
+                                    <sortDependencies>scope,groupId,artifactId</sortDependencies>
+                                    <sortDependencyExclusions>groupId,artifactId</sortDependencyExclusions>
+                                    <sortDependencyManagement>scope,groupId,artifactId</sortDependencyManagement>
+                                    <sortPlugins>groupId,artifactId</sortPlugins>
+                                </sortPom>
+                            </pom>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <phase>verify</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
-
-    <scm>
-        <url>https://github.com/freiheitstools/semver-lib</url>
-    </scm>
-
-    <issueManagement>
-        <url>https://github.com/freiheitstools/semver-lib/issues</url>
-        <system>GitHub</system>
-    </issueManagement>
-
-    <developers>
-        <developer>
-            <name>Oliver B. Fischer</name>
-            <email>oliver.fischer@freiheitsgrade.consulting</email>
-            <roles>
-                <role>project lead</role>
-            </roles>
-        </developer>
-    </developers>
-
-    <description>
-        The Semantic Version Parser Library offers all functions to parse, manipulate, and build
-        semantic version numbers with Java.
-    </description>
-
-    <inceptionYear>2024</inceptionYear>
 </project>

@@ -7,11 +7,38 @@ import java.util.List;
 
 class FiniteStateTransitionTable {
     private State currentState;
-    private Collection<FiniteStateTransition> transitions = new ArrayList<>();
     private List<State> reachedStates = new ArrayList<>(6);
+    private Collection<FiniteStateTransition> transitions = new ArrayList<>();
+
+    void accept(char currentChar) throws NoTransitionFoundException {
+        if (getCurrentState().isErrorState() || getCurrentState().isFinalState()) {
+            throw new TerminalNodeReachedException(getCurrentState());
+        }
+
+        Collection<FiniteStateTransition> transitions = findAllTransitionsForCurrentState();
+
+        FiniteStateTransition transition = transitions.stream()
+                .filter(finiteStateTransition -> finiteStateTransition.accepts(currentChar))
+                .findFirst()
+                .orElseThrow(() -> new NoTransitionFoundException(getCurrentState(), currentChar));
+
+        setNewState(currentChar, transition.getTargetState());
+    }
+
+    void addTransition(FiniteStateTransition transition) {
+        this.transitions.add(transition);
+    }
 
     ToStateStep from(State startState) {
         return new ToStateStep(startState);
+    }
+
+    State getCurrentState() {
+        return currentState;
+    }
+
+    List<State> getReachedStates() {
+        return Collections.unmodifiableList(reachedStates);
     }
 
     void startFrom(State startState) {
@@ -22,45 +49,17 @@ class FiniteStateTransitionTable {
         setNewState('s', startState);
     }
 
-    State getCurrentState() {
-        return currentState;
-    }
-
-    void accept(char currentChar) throws NoTransitionFoundException {
-        if (getCurrentState().isErrorState() || getCurrentState().isFinalState()) {
-            throw new TerminalNodeReachedException(getCurrentState());
-        }
-
-        Collection<FiniteStateTransition> transitions = findAllTransitionsForCurrentState();
-
-        FiniteStateTransition transition = transitions
-                .stream()
-                .filter(finiteStateTransition -> finiteStateTransition.accepts(currentChar))
-                .findFirst()
-                .orElseThrow(() -> new NoTransitionFoundException(getCurrentState(), currentChar));
-
-        setNewState(currentChar, transition.getTargetState());
-    }
-
-    private void setNewState(char input, State newState) {
-        // used only for debugging [System.out.println("'" + input + "' : " +getCurrentState() + " -> " + newState);
-        this.currentState = newState;
-        reachedStates.add(newState);
-    }
-
-    List<State> getReachedStates() {
-        return Collections.unmodifiableList(reachedStates);
-    }
-
     private Collection<FiniteStateTransition> findAllTransitionsForCurrentState() {
-        return transitions
-                .stream()
+        return transitions.stream()
                 .filter(finiteStateTransition -> finiteStateTransition.getStartState() == getCurrentState())
                 .toList();
     }
 
-    void addTransition(FiniteStateTransition transition) {
-        this.transitions.add(transition);
+    private void setNewState(char input, State newState) {
+        // used only for debugging [System.out.println("'" + input + "' : "
+        // +getCurrentState() + " -> " + newState);
+        this.currentState = newState;
+        reachedStates.add(newState);
     }
 
     class ToStateStep {
@@ -76,8 +75,8 @@ class FiniteStateTransitionTable {
     }
 
     class WhenStep {
-        private final State targetState;
         private final State startState;
+        private final State targetState;
 
         WhenStep(State startState, State targetState) {
             this.startState = startState;

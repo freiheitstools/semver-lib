@@ -1,22 +1,22 @@
 package io.github.freiheitstools.semver.parser.implementation;
 
+import static io.github.freiheitstools.semver.parser.implementation.CharacterSets.TERMINAL_SIGNAL;
+
 import io.github.freiheitstools.semver.parser.api.SemVer;
 import io.github.freiheitstools.semver.parser.api.SemVerParser;
 import io.github.freiheitstools.semver.parser.api.SemanticVersionNumberElement;
 import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import static io.github.freiheitstools.semver.parser.implementation.CharacterSets.TERMINAL_SIGNAL;
-
-/** todo Klasse umbenennen ohne 2  */
+/** todo Klasse umbenennen ohne 2 */
 public class InternalSemanticVersionParser implements SemVerParser {
     public static final int MAX_LENGTH = 2_048;
 
     public @NonNull SemVer parse(String semanticVersion) throws IllegalArgumentException {
         if (StringUtils.length(semanticVersion) > MAX_LENGTH) {
             String message = """
-                The given semantic version exceeds the maximum allowed length of %d characters
-                """.formatted(MAX_LENGTH);
+					The given semantic version exceeds the maximum allowed length of %d characters
+					""".formatted(MAX_LENGTH);
             throw new IllegalArgumentException(message);
         }
 
@@ -41,13 +41,16 @@ public class InternalSemanticVersionParser implements SemVerParser {
             }
 
         } catch (NoTransitionFoundException noTransitionFoundException) {
-            String message = String.format("Failed to parse semantic version '%s'. This might be a bug in the library ", semanticVersion);
+            String message = String.format(
+                    "Failed to parse semantic version '%s'. This might be a bug in the library ", semanticVersion);
             throw new IllegalStateException(message, noTransitionFoundException);
         } catch (TerminalNodeReachedException e) {
             // ignore
         }
 
-        State finalState = transitionTable.getReachedStates().get(transitionTable.getReachedStates().size() - 1);
+        State finalState = transitionTable
+                .getReachedStates()
+                .get(transitionTable.getReachedStates().size() - 1);
 
         if (finalState.isErrorState()) {
             SemanticVersionNumberElement errorLocation = errorLocationMapping.getLocationByState(finalState);
@@ -57,7 +60,9 @@ public class InternalSemanticVersionParser implements SemVerParser {
         parsedElements.getResult(SemanticVersionNumberElement.MAJOR_VERSION).ifPresent(semVer::setMajorVersion);
         parsedElements.getResult(SemanticVersionNumberElement.MINOR_VERSION).ifPresent(semVer::setMinorVersion);
         parsedElements.getResult(SemanticVersionNumberElement.PATCH_VERSION).ifPresent(semVer::setPatchVersion);
-        parsedElements.getResult(SemanticVersionNumberElement.PRERELEASE_VERSION).ifPresent(semVer::setPreReleaseIdentifier);
+        parsedElements
+                .getResult(SemanticVersionNumberElement.PRERELEASE_VERSION)
+                .ifPresent(semVer::setPreReleaseIdentifier);
         parsedElements.getResult(SemanticVersionNumberElement.BUILD_VERSION).ifPresent(semVer::setBuild);
         return semVer;
     }
