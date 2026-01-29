@@ -1,7 +1,6 @@
 package io.github.freiheitstools.semver.parser.implementation;
 
 import io.github.freiheitstools.semver.parser.api.SemanticVersionNumberElement;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -21,4 +20,3 @@ class ParsedElements {
         return Optional.empty();
     }
 }
-

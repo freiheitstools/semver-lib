@@ -77,3 +77,44 @@ The versioning of the Semantic Versioning Parser takes place according to the pr
 This means that the version of a release is only a statement on compatibility, not of functionality.
 
 As every good open source project, it is never complete.
+
+== Building the Library
+
+The projects used Apache Maven to build.
+So a simple call to Maven without any goal will build the library.
+
+.Building the project via Apache Maven
+[source,shell]
+----
+mvn
+----
+
+=== Disabling any style checks during the build
+
+The project uses the https://github.com/diffplug/spotless/[Spotless] to ensure a consistent layout and style for various artefacts.
+You can disable this check during development time by disabling the profile used to run Spotless by running Maven with `-P!run-spotless-to-check-project`.
+
+.Building the Library without the checks by Spotless
+[source,shell]
+----
+mvn -P!run-spotless-to-check-project
+----
+
+You can also add this option to your `.mvn/maven.config` file to persist this setting.
+
+.Disabling the profile via `.mvn/maven.config`
+[source,shell]
+----
+echo "-P!run-spotless-to-check-project" >> .mvn/maven.config
+----
+
+==== Using Spotless to ensure a consistent layout
+
+To achive the required layout for various artefacts, you can call the `apply` goal of Spotless.
+Make sure that Spotless has not been disabled.
+
+.Formatting the project with Spotless
+[source,shell]
+----
+mvn spotless:apply
+----

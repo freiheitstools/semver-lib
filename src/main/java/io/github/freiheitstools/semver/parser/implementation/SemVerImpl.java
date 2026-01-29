@@ -3,19 +3,31 @@ package io.github.freiheitstools.semver.parser.implementation;
 import io.github.freiheitstools.semver.parser.api.InvalidSemanticVersionException;
 import io.github.freiheitstools.semver.parser.api.SemVer;
 import io.github.freiheitstools.semver.parser.api.SemanticVersionNumberElement;
+import java.util.Optional;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-import java.util.Optional;
-import java.util.function.Consumer;
-
 class SemVerImpl implements SemVer {
+    private String build;
+    private SemanticVersionNumberElement errorLocation = null;
     private String majorVersion;
     private String minorVersion;
     private String patchVersion;
-    private String semanticVersion;
     private String preReleaseIdentifier;
-    private SemanticVersionNumberElement errorLocation = null;
-    private String build;
+    private String semanticVersion;
+
+    @NonNull @Override
+    public Optional<String> getBuild() {
+        if (isInvalid()) {
+            throw new InvalidSemanticVersionException(getSemanticVersion());
+        }
+
+        return Optional.ofNullable(build);
+    }
+
+    @Override
+    public @NonNull Optional<SemanticVersionNumberElement> getErrorLocation() {
+        return Optional.ofNullable(errorLocation);
+    }
 
     @Override
     public Integer getMajor() {
@@ -26,12 +38,6 @@ class SemVerImpl implements SemVer {
         return Integer.valueOf(majorVersion);
     }
 
-    /* todo rm public */ public
-    void setMajorVersion(String majorVersion) {
-        this.majorVersion = majorVersion;
-    }
-
-
     @Override
     public Integer getMinor() {
         if (isInvalid()) {
@@ -39,11 +45,6 @@ class SemVerImpl implements SemVer {
         }
 
         return Integer.valueOf(minorVersion);
-    }
-
-
-    void setMinorVersion(String minorVersion) {
-        this.minorVersion = minorVersion;
     }
 
     @Override
@@ -55,22 +56,7 @@ class SemVerImpl implements SemVer {
         return Integer.valueOf(patchVersion);
     }
 
-    void setPatchVersion(@NonNull String patchVersion) {
-        this.patchVersion = patchVersion;
-    }
-
-    @NonNull
-    @Override
-    public String getSemanticVersion() {
-        return semanticVersion;
-    }
-
-    public void setSemanticVersion(String semanticVersion) {
-        this.semanticVersion = semanticVersion;
-    }
-
-    @NonNull
-    @Override
+    @NonNull @Override
     public Optional<String> getPreRelease() {
         if (isInvalid()) {
             throw new InvalidSemanticVersionException(getSemanticVersion());
@@ -79,16 +65,31 @@ class SemVerImpl implements SemVer {
         return Optional.ofNullable(preReleaseIdentifier);
     }
 
-    @NonNull
-    @Override
-    public Optional<String> getBuild() {
-        if (isInvalid()) {
-            throw new InvalidSemanticVersionException(getSemanticVersion());
-        }
-
-        return Optional.ofNullable(build);
+    @NonNull @Override
+    public String getSemanticVersion() {
+        return semanticVersion;
     }
 
+    public void setBuild(String build) {
+        this.build = build;
+    }
+
+    // todo rm public
+    public void setErrorLocation(SemanticVersionNumberElement location) {
+        this.errorLocation = location;
+    }
+
+    /* todo rm public */ public void setMajorVersion(String majorVersion) {
+        this.majorVersion = majorVersion;
+    }
+
+    public void setPreReleaseIdentifier(String preReleaseIdentifier) {
+        this.preReleaseIdentifier = preReleaseIdentifier;
+    }
+
+    public void setSemanticVersion(String semanticVersion) {
+        this.semanticVersion = semanticVersion;
+    }
 
     @Override
     public String toString() {
@@ -103,21 +104,11 @@ class SemVerImpl implements SemVer {
         return sb.toString();
     }
 
-    public void setPreReleaseIdentifier(String preReleaseIdentifier) {
-        this.preReleaseIdentifier = preReleaseIdentifier;
+    void setMinorVersion(String minorVersion) {
+        this.minorVersion = minorVersion;
     }
 
-    @Override
-    public @NonNull Optional<SemanticVersionNumberElement> getErrorLocation() {
-        return Optional.ofNullable(errorLocation);
-    }
-
-    // todo rm public
-    public void setErrorLocation(SemanticVersionNumberElement location) {
-        this.errorLocation = location;
-    }
-
-    public void setBuild(String build) {
-        this.build = build;
+    void setPatchVersion(@NonNull String patchVersion) {
+        this.patchVersion = patchVersion;
     }
 }

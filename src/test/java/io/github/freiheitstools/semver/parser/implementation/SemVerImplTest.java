@@ -1,11 +1,11 @@
 package io.github.freiheitstools.semver.parser.implementation;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import io.github.freiheitstools.semver.parser.api.InvalidSemanticVersionException;
 import io.github.freiheitstools.semver.parser.api.SemanticVersionNumberElement;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class SemVerImplTest {
     SemVerImpl classUnderTest = new SemVerImpl();
@@ -17,19 +17,19 @@ class SemVerImplTest {
 
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThatThrownBy(() -> classUnderTest.getMajor())
-                  .isExactlyInstanceOf(InvalidSemanticVersionException.class);
+                    .isExactlyInstanceOf(InvalidSemanticVersionException.class);
 
             softly.assertThatThrownBy(() -> classUnderTest.getMinor())
-                  .isExactlyInstanceOf(InvalidSemanticVersionException.class);
+                    .isExactlyInstanceOf(InvalidSemanticVersionException.class);
 
             softly.assertThatThrownBy(() -> classUnderTest.getPatch())
-                      .isExactlyInstanceOf(InvalidSemanticVersionException.class);
+                    .isExactlyInstanceOf(InvalidSemanticVersionException.class);
 
             softly.assertThatThrownBy(() -> classUnderTest.getPreRelease())
-                  .isExactlyInstanceOf(InvalidSemanticVersionException.class);
+                    .isExactlyInstanceOf(InvalidSemanticVersionException.class);
 
             softly.assertThatThrownBy(() -> classUnderTest.getBuild())
-                  .isExactlyInstanceOf(InvalidSemanticVersionException.class);
+                    .isExactlyInstanceOf(InvalidSemanticVersionException.class);
         });
     }
 
