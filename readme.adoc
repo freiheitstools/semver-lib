@@ -6,7 +6,7 @@ image:https://github.com/freiheitstools/semver-lib/actions/workflows/build-and-t
 
 '''
 
-The _Semantic Versioning Parser_ is a Java library for parsing and building semantic versions according to the https://semver.org/[Semantic Version Specification].
+The _Semantic Versioning Parser_ is a Java library for parsing,building, and validating semantic versions according to the https://semver.org/[Semantic Version Specification 2.0.0].
 It requires Java 17 or higher.
 
 == Maven Dependency
