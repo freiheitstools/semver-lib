@@ -5,7 +5,6 @@ package io.github.freiheitstools.semver.parser.implementation;
  * processing while input is still available.
  */
 class TerminalNodeReachedException extends RuntimeException {
-
     private final State state;
 
     public TerminalNodeReachedException(State currentState) {

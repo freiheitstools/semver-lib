@@ -40,8 +40,6 @@ public class SemVerBuilderImpl extends SemVerBuilder {
         this.build = null;
         this.prerelease = null;
 
-        validateCurrentSemanticVersion();
-
         return this;
     }
 
@@ -59,8 +57,6 @@ public class SemVerBuilderImpl extends SemVerBuilder {
         this.build = null;
         this.prerelease = null;
 
-        validateCurrentSemanticVersion();
-
         return this;
     }
 
@@ -76,8 +72,6 @@ public class SemVerBuilderImpl extends SemVerBuilder {
         this.build = null;
         this.prerelease = null;
 
-        validateCurrentSemanticVersion();
-
         return this;
     }
 
@@ -85,16 +79,12 @@ public class SemVerBuilderImpl extends SemVerBuilder {
     public SemVerBuilder removeBuild() {
         this.build = null;
 
-        validateCurrentSemanticVersion();
-
         return this;
     }
 
     @Override
     public SemVerBuilder removePrerelease() {
         this.prerelease = null;
-
-        validateCurrentSemanticVersion();
 
         return this;
     }
@@ -183,11 +173,11 @@ public class SemVerBuilderImpl extends SemVerBuilder {
 
         if (result.isInvalid()) {
             String message = """
-					%s would not represent a valid semantic version, as the %s part is not valid
+					%s would not represent a valid semantic version, as the %s part is not valid\
 					""".formatted(
                             stringRepresentation, result.getErrorLocation().orElseThrow(IllegalStateException::new));
 
-            throw new InvalidSemanticVersionException(message);
+            throw InvalidSemanticVersionException.ofMessage(message);
         }
     }
 }

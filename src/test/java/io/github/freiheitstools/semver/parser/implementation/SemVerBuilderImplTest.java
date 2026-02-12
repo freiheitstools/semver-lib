@@ -6,8 +6,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import io.github.freiheitstools.semver.parser.api.InvalidSemanticVersionException;
 import io.github.freiheitstools.semver.parser.api.SemVer;
 import io.github.freiheitstools.semver.parser.api.SemVerBuilder;
+import io.github.freiheitstools.semver.parser.api.SemanticVersionNumberElement;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class SemVerBuilderImplTest {
     InternalSemanticVersionParser parser = new InternalSemanticVersionParser();
@@ -74,5 +78,62 @@ class SemVerBuilderImplTest {
                 .build();
 
         assertThat(result).hasToString(expectedResult);
+    }
+
+    @Test
+    void builderWillFailIfBuildIdentifierIsInvalid() {
+        // -- Given
+        SemVer givenStartingSemVer = parser.parse("1.2.3");
+        SemVerBuilder classUnderTest = new SemVerBuilderImpl().startFrom(givenStartingSemVer);
+
+        // -- Then
+        Assertions.assertThatThrownBy(() -> {
+                    classUnderTest.setBuild("?");
+                })
+                .isInstanceOf(InvalidSemanticVersionException.class)
+                .hasMessage("""
+				1.2.3+? would not represent a valid semantic version, \
+				as the BUILD_VERSION part is not valid\
+				""");
+    }
+
+    @Test
+    void builderWillFailIfPrereleaseIdentifierIsInvalid() {
+        // -- Given
+        SemVer givenStartingSemVer = parser.parse("1.2.3");
+        SemVerBuilder classUnderTest = new SemVerBuilderImpl().startFrom(givenStartingSemVer);
+
+        // -- Then
+        Assertions.assertThatThrownBy(() -> {
+                    classUnderTest.setPrerelease("?");
+                })
+                .isInstanceOf(InvalidSemanticVersionException.class)
+                .hasMessage("""
+				1.2.3-? would not represent a valid semantic version, \
+				as the PRERELEASE_VERSION part is not valid\
+				""");
+    }
+
+    @ParameterizedTest
+    @CsvSource("""
+			PATCH_VERSION
+			MINOR_VERSION
+			MAJOR_VERSION
+			""")
+    void builderRefusesInvalidSemanticVersionWithNegativeValueForCoreNumbers(SemanticVersionNumberElement element) {
+        // -- Given
+        SemVer givenStartingSemVer = parser.parse("1.2.3");
+        SemVerBuilder classUnderTest = new SemVerBuilderImpl().startFrom(givenStartingSemVer);
+
+        // -- Then
+        assertThatThrownBy(() -> {
+                    switch (element) {
+                        case PATCH_VERSION -> classUnderTest.setPatch(-1);
+                        case MINOR_VERSION -> classUnderTest.setMinor(-1);
+                        case MAJOR_VERSION -> classUnderTest.setMajor(-1);
+                    }
+                })
+                .isInstanceOf(InvalidSemanticVersionException.class)
+                .hasNoCause();
     }
 }

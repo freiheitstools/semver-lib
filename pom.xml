@@ -65,7 +65,7 @@
         <svp.maven-gpg-plugin.version>3.2.8</svp.maven-gpg-plugin.version>
         <svp.maven-source-plugin.version>3.4.0</svp.maven-source-plugin.version>
         <svp.pitest-junit.version>1.2.3</svp.pitest-junit.version>
-        <svp.pitest-target.coverage>83</svp.pitest-target.coverage>
+        <svp.pitest-target.coverage>94</svp.pitest-target.coverage>
         <svp.pitest.skip>false</svp.pitest.skip>
         <svp.pitest.version>1.22.1</svp.pitest.version>
         <svp.spotless.version>3.2.1</svp.spotless.version>
