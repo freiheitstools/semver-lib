@@ -24,6 +24,24 @@ import static io.github.freiheitstools.semver.parser.implementation.State.S15_PR
 import static io.github.freiheitstools.semver.parser.implementation.State.S16_AFTER_PLUS_BEFORE_BUILD;
 import static io.github.freiheitstools.semver.parser.implementation.State.S17_BUILD_AFTER_ALPHANUM;
 import static io.github.freiheitstools.semver.parser.implementation.State.S18_BUILD_DOT_IN_BUILD;
+import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.ALPHA;
+import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.ALPHANUM;
+import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.DIGIT;
+import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.DOT;
+import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.END_OF_INPUT;
+import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.HYPHEN;
+import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.NEITHER_ALPHANUM_DOT;
+import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.NEITHER_ALPHA_DOT_PLUS;
+import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.NEITHER_ALPHA_ZERO_DIGIT;
+import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.NEITHER_DIGIT_ALPHA_HYPHEN_DOT_PLUS;
+import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.NEITHER_DOT_DIGIT;
+import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.NON_DIGIT;
+import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.NOT_A_DOT;
+import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.NO_ALPHANUM;
+import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.NO_ZERO_ALPHA_EOI;
+import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.PLUS;
+import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.POSITIVE_DIGIT;
+import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.ZERO_DIGIT;
 
 import java.util.List;
 
@@ -54,6 +72,7 @@ class SemVerFiniteStateTransitionTable {
          * script used to extract the rules cannot handle linebreaks in the statements.
          * 2024-10-20 // Oliver B. Fischer
          */
+
         /*
          *
          */
@@ -62,13 +81,10 @@ class SemVerFiniteStateTransitionTable {
         /*
          *
          */
-        transitionTable.from(S00_START).to(S01_MAJOR_STARTS_WITH_ZERO).when(TransitionCharSets.ZERO_DIGIT);
-        transitionTable
-                .from(S00_START)
-                .to(S02_MAJOR_STARTS_WITH_POSITIVE_DIGIT)
-                .when(TransitionCharSets.POSITIVE_DIGIT);
-        transitionTable.from(S00_START).to(ERROR_MAJOR_VERSION).when(TransitionCharSets.END_OF_INPUT);
-        transitionTable.from(S00_START).to(ERROR_MAJOR_VERSION).when(TransitionCharSets.NON_DIGIT);
+        transitionTable.from(S00_START).to(S01_MAJOR_STARTS_WITH_ZERO).when(ZERO_DIGIT);
+        transitionTable.from(S00_START).to(S02_MAJOR_STARTS_WITH_POSITIVE_DIGIT).when(POSITIVE_DIGIT);
+        transitionTable.from(S00_START).to(ERROR_MAJOR_VERSION).when(END_OF_INPUT);
+        transitionTable.from(S00_START).to(ERROR_MAJOR_VERSION).when(NON_DIGIT);
 
         /*
          *
@@ -76,8 +92,8 @@ class SemVerFiniteStateTransitionTable {
         transitionTable
                 .from(S01_MAJOR_STARTS_WITH_ZERO)
                 .to(S03_DOT_AFTER_MAJOR_NUMBER)
-                .when(TransitionCharSets.DOT);
-        transitionTable.from(S01_MAJOR_STARTS_WITH_ZERO).to(ERROR_MAJOR_VERSION).when(TransitionCharSets.NOT_A_DOT);
+                .when(DOT);
+        transitionTable.from(S01_MAJOR_STARTS_WITH_ZERO).to(ERROR_MAJOR_VERSION).when(NOT_A_DOT);
 
         /*
          *
@@ -85,15 +101,15 @@ class SemVerFiniteStateTransitionTable {
         transitionTable
                 .from(S02_MAJOR_STARTS_WITH_POSITIVE_DIGIT)
                 .to(S02_MAJOR_STARTS_WITH_POSITIVE_DIGIT)
-                .when(TransitionCharSets.DIGIT);
+                .when(DIGIT);
         transitionTable
                 .from(S02_MAJOR_STARTS_WITH_POSITIVE_DIGIT)
                 .to(S03_DOT_AFTER_MAJOR_NUMBER)
-                .when(TransitionCharSets.DOT);
+                .when(DOT);
         transitionTable
                 .from(S02_MAJOR_STARTS_WITH_POSITIVE_DIGIT)
                 .to(ERROR_MINOR_VERSION)
-                .when(TransitionCharSets.NEITHER_DOT_DIGIT);
+                .when(NEITHER_DOT_DIGIT);
 
         /*
          * S3: All transitions starting from the dot between major and minor number
@@ -101,12 +117,12 @@ class SemVerFiniteStateTransitionTable {
         transitionTable
                 .from(S03_DOT_AFTER_MAJOR_NUMBER)
                 .to(S05_MINOR_STARTS_WITH_POSITIVE_DIGIT)
-                .when(TransitionCharSets.POSITIVE_DIGIT);
+                .when(POSITIVE_DIGIT);
         transitionTable
                 .from(S03_DOT_AFTER_MAJOR_NUMBER)
                 .to(S04_MINOR_STARTS_WITH_ZERO)
-                .when(TransitionCharSets.ZERO_DIGIT);
-        transitionTable.from(S03_DOT_AFTER_MAJOR_NUMBER).to(ERROR_MINOR_VERSION).when(TransitionCharSets.NON_DIGIT);
+                .when(ZERO_DIGIT);
+        transitionTable.from(S03_DOT_AFTER_MAJOR_NUMBER).to(ERROR_MINOR_VERSION).when(NON_DIGIT);
 
         /*
          *
@@ -114,9 +130,9 @@ class SemVerFiniteStateTransitionTable {
         transitionTable
                 .from(S04_MINOR_STARTS_WITH_ZERO)
                 .to(S06_DOT_AFTER_MINOR_NUMBER)
-                .when(TransitionCharSets.DOT);
-        transitionTable.from(S04_MINOR_STARTS_WITH_ZERO).to(ERROR_MINOR_VERSION).when(TransitionCharSets.NOT_A_DOT);
-        transitionTable.from(S04_MINOR_STARTS_WITH_ZERO).to(ERROR_MINOR_VERSION).when(TransitionCharSets.NON_DIGIT);
+                .when(DOT);
+        transitionTable.from(S04_MINOR_STARTS_WITH_ZERO).to(ERROR_MINOR_VERSION).when(NOT_A_DOT);
+        transitionTable.from(S04_MINOR_STARTS_WITH_ZERO).to(ERROR_MINOR_VERSION).when(NON_DIGIT);
 
         /*
          * All transitions from S5: The minor number starts with a positive digit
@@ -124,15 +140,15 @@ class SemVerFiniteStateTransitionTable {
         transitionTable
                 .from(S05_MINOR_STARTS_WITH_POSITIVE_DIGIT)
                 .to(S06_DOT_AFTER_MINOR_NUMBER)
-                .when(TransitionCharSets.DOT);
+                .when(DOT);
         transitionTable
                 .from(S05_MINOR_STARTS_WITH_POSITIVE_DIGIT)
                 .to(S05_MINOR_STARTS_WITH_POSITIVE_DIGIT)
-                .when(TransitionCharSets.DIGIT);
+                .when(DIGIT);
         transitionTable
                 .from(S05_MINOR_STARTS_WITH_POSITIVE_DIGIT)
                 .to(ERROR_MINOR_VERSION)
-                .when(TransitionCharSets.NEITHER_DOT_DIGIT);
+                .when(NEITHER_DOT_DIGIT);
 
         /*
          *
@@ -140,13 +156,13 @@ class SemVerFiniteStateTransitionTable {
         transitionTable
                 .from(S06_DOT_AFTER_MINOR_NUMBER)
                 .to(S08_PATCH_STARTS_WITH_ZERO)
-                .when(TransitionCharSets.ZERO_DIGIT);
+                .when(ZERO_DIGIT);
         transitionTable
                 .from(S06_DOT_AFTER_MINOR_NUMBER)
                 .to(S07_PATCH_STARTS_WITH_POSITIVE_DIGIT)
-                .when(TransitionCharSets.POSITIVE_DIGIT);
-        transitionTable.from(S06_DOT_AFTER_MINOR_NUMBER).to(ERROR_PATCH_NUMBER).when(TransitionCharSets.END_OF_INPUT);
-        transitionTable.from(S06_DOT_AFTER_MINOR_NUMBER).to(ERROR_PATCH_NUMBER).when(TransitionCharSets.NON_DIGIT);
+                .when(POSITIVE_DIGIT);
+        transitionTable.from(S06_DOT_AFTER_MINOR_NUMBER).to(ERROR_PATCH_NUMBER).when(END_OF_INPUT);
+        transitionTable.from(S06_DOT_AFTER_MINOR_NUMBER).to(ERROR_PATCH_NUMBER).when(NON_DIGIT);
 
         /*
          * All transitions from S7: The patch number starts with 1..9
@@ -154,38 +170,37 @@ class SemVerFiniteStateTransitionTable {
         transitionTable
                 .from(S07_PATCH_STARTS_WITH_POSITIVE_DIGIT)
                 .to(END_OF_SEMVER)
-                .when(TransitionCharSets.END_OF_INPUT);
+                .when(END_OF_INPUT);
         transitionTable
                 .from(S07_PATCH_STARTS_WITH_POSITIVE_DIGIT)
                 .to(S07_PATCH_STARTS_WITH_POSITIVE_DIGIT)
-                .when(TransitionCharSets.DIGIT);
+                .when(DIGIT);
         transitionTable
                 .from(S07_PATCH_STARTS_WITH_POSITIVE_DIGIT)
                 .to(S09_AFTER_HYPHEN_BEFORE_PRERELEASE)
-                .when(TransitionCharSets.HYPHEN);
+                .when(HYPHEN);
         transitionTable
                 .from(S07_PATCH_STARTS_WITH_POSITIVE_DIGIT)
                 .to(S16_AFTER_PLUS_BEFORE_BUILD)
-                .when(TransitionCharSets.PLUS);
+                .when(PLUS);
         transitionTable
                 .from(S07_PATCH_STARTS_WITH_POSITIVE_DIGIT)
                 .to(ERROR_PATCH_NUMBER)
-                .when(TransitionCharSet.ofNegationFor(
-                        TransitionCharSets.PLUS, TransitionCharSets.DIGIT, TransitionCharSets.HYPHEN));
+                .when(TransitionCharSet.ofNegationFor(PLUS, DIGIT, HYPHEN));
 
         /*
          *
          */
-        transitionTable.from(S08_PATCH_STARTS_WITH_ZERO).to(END_OF_SEMVER).when(TransitionCharSets.END_OF_INPUT);
-        transitionTable.from(S08_PATCH_STARTS_WITH_ZERO).to(ERROR_PATCH_NUMBER).when(TransitionCharSets.DIGIT);
+        transitionTable.from(S08_PATCH_STARTS_WITH_ZERO).to(END_OF_SEMVER).when(END_OF_INPUT);
+        transitionTable.from(S08_PATCH_STARTS_WITH_ZERO).to(ERROR_PATCH_NUMBER).when(DIGIT);
         transitionTable
                 .from(S08_PATCH_STARTS_WITH_ZERO)
                 .to(S09_AFTER_HYPHEN_BEFORE_PRERELEASE)
-                .when(TransitionCharSets.HYPHEN);
+                .when(HYPHEN);
         transitionTable
                 .from(S08_PATCH_STARTS_WITH_ZERO)
                 .to(S16_AFTER_PLUS_BEFORE_BUILD)
-                .when(TransitionCharSets.PLUS);
+                .when(PLUS);
 
         /*
          *
@@ -193,23 +208,23 @@ class SemVerFiniteStateTransitionTable {
         transitionTable
                 .from(S09_AFTER_HYPHEN_BEFORE_PRERELEASE)
                 .to(S12_PRERELEASE_AFTER_ALPHA)
-                .when(TransitionCharSets.ALPHA);
+                .when(ALPHA);
         transitionTable
                 .from(S09_AFTER_HYPHEN_BEFORE_PRERELEASE)
                 .to(S13_PRERELEASE_AFTER_ZERO)
-                .when(TransitionCharSets.ZERO_DIGIT);
+                .when(ZERO_DIGIT);
         transitionTable
                 .from(S09_AFTER_HYPHEN_BEFORE_PRERELEASE)
                 .to(S11_PRERELEASE_AFTER_POSITIVE_DIGIT)
-                .when(TransitionCharSets.POSITIVE_DIGIT);
+                .when(POSITIVE_DIGIT);
         transitionTable
                 .from(S09_AFTER_HYPHEN_BEFORE_PRERELEASE)
                 .to(ERROR_PRERELEASE)
-                .when(TransitionCharSets.END_OF_INPUT);
+                .when(END_OF_INPUT);
         transitionTable
                 .from(S09_AFTER_HYPHEN_BEFORE_PRERELEASE)
                 .to(ERROR_PRERELEASE)
-                .when(TransitionCharSets.NEITHER_ALPHA_ZERO_DIGIT);
+                .when(NEITHER_ALPHA_ZERO_DIGIT);
 
         /*
          *
@@ -217,65 +232,59 @@ class SemVerFiniteStateTransitionTable {
         transitionTable
                 .from(S11_PRERELEASE_AFTER_POSITIVE_DIGIT)
                 .to(END_OF_SEMVER)
-                .when(TransitionCharSets.END_OF_INPUT);
+                .when(END_OF_INPUT);
         transitionTable
                 .from(S11_PRERELEASE_AFTER_POSITIVE_DIGIT)
                 .to(S11_PRERELEASE_AFTER_POSITIVE_DIGIT)
-                .when(TransitionCharSets.ALPHANUM);
+                .when(ALPHANUM);
         transitionTable
                 .from(S11_PRERELEASE_AFTER_POSITIVE_DIGIT)
                 .to(S14_PRERELEASE_AFTER_DOT)
-                .when(TransitionCharSets.DOT);
+                .when(DOT);
         transitionTable
                 .from(S11_PRERELEASE_AFTER_POSITIVE_DIGIT)
                 .to(S16_AFTER_PLUS_BEFORE_BUILD)
-                .when(TransitionCharSets.PLUS);
+                .when(PLUS);
 
         /*
          *
          */
-        transitionTable.from(S12_PRERELEASE_AFTER_ALPHA).to(END_OF_SEMVER).when(TransitionCharSets.END_OF_INPUT);
+        transitionTable.from(S12_PRERELEASE_AFTER_ALPHA).to(END_OF_SEMVER).when(END_OF_INPUT);
         transitionTable
                 .from(S12_PRERELEASE_AFTER_ALPHA)
                 .to(S12_PRERELEASE_AFTER_ALPHA)
-                .when(TransitionCharSets.ALPHANUM);
+                .when(ALPHANUM);
         transitionTable
                 .from(S12_PRERELEASE_AFTER_ALPHA)
                 .to(S14_PRERELEASE_AFTER_DOT)
-                .when(TransitionCharSets.DOT);
-        transitionTable
-                .from(S12_PRERELEASE_AFTER_ALPHA)
-                .to(ERROR_PRERELEASE)
-                .when(TransitionCharSets.NEITHER_ALPHA_DOT_PLUS);
+                .when(DOT);
+        transitionTable.from(S12_PRERELEASE_AFTER_ALPHA).to(ERROR_PRERELEASE).when(NEITHER_ALPHA_DOT_PLUS);
         transitionTable
                 .from(S12_PRERELEASE_AFTER_ALPHA)
                 .to(S16_AFTER_PLUS_BEFORE_BUILD)
-                .when(TransitionCharSets.PLUS);
+                .when(PLUS);
 
         /*
          *
          */
-        transitionTable.from(S13_PRERELEASE_AFTER_ZERO).to(END_OF_SEMVER).when(TransitionCharSets.END_OF_INPUT);
+        transitionTable.from(S13_PRERELEASE_AFTER_ZERO).to(END_OF_SEMVER).when(END_OF_INPUT);
         transitionTable
                 .from(S13_PRERELEASE_AFTER_ZERO)
                 .to(S14_PRERELEASE_AFTER_DOT)
-                .when(TransitionCharSets.DOT);
+                .when(DOT);
         transitionTable
                 .from(S13_PRERELEASE_AFTER_ZERO)
                 .to(S15_PRERELEASE_DIGIT_LOOP)
-                .when(TransitionCharSets.DIGIT);
+                .when(DIGIT);
         transitionTable
                 .from(S13_PRERELEASE_AFTER_ZERO)
                 .to(S12_PRERELEASE_AFTER_ALPHA)
-                .when(TransitionCharSets.ALPHA);
+                .when(ALPHA);
         transitionTable
                 .from(S13_PRERELEASE_AFTER_ZERO)
                 .to(S16_AFTER_PLUS_BEFORE_BUILD)
-                .when(TransitionCharSets.PLUS);
-        transitionTable
-                .from(S13_PRERELEASE_AFTER_ZERO)
-                .to(ERROR_PRERELEASE)
-                .when(TransitionCharSets.NEITHER_DIGIT_ALPHA_HYPHEN_DOT_PLUS);
+                .when(PLUS);
+        transitionTable.from(S13_PRERELEASE_AFTER_ZERO).to(ERROR_PRERELEASE).when(NEITHER_DIGIT_ALPHA_HYPHEN_DOT_PLUS);
 
         /*
          *
@@ -283,17 +292,17 @@ class SemVerFiniteStateTransitionTable {
         transitionTable
                 .from(S14_PRERELEASE_AFTER_DOT)
                 .to(S11_PRERELEASE_AFTER_POSITIVE_DIGIT)
-                .when(TransitionCharSets.POSITIVE_DIGIT);
+                .when(POSITIVE_DIGIT);
         transitionTable
                 .from(S14_PRERELEASE_AFTER_DOT)
                 .to(S13_PRERELEASE_AFTER_ZERO)
-                .when(TransitionCharSets.ZERO_DIGIT);
+                .when(ZERO_DIGIT);
         transitionTable
                 .from(S14_PRERELEASE_AFTER_DOT)
                 .to(S12_PRERELEASE_AFTER_ALPHA)
-                .when(TransitionCharSets.ALPHA);
-        transitionTable.from(S14_PRERELEASE_AFTER_DOT).to(ERROR_PRERELEASE).when(TransitionCharSets.END_OF_INPUT);
-        transitionTable.from(S14_PRERELEASE_AFTER_DOT).to(ERROR_PRERELEASE).when(TransitionCharSets.DOT);
+                .when(ALPHA);
+        transitionTable.from(S14_PRERELEASE_AFTER_DOT).to(ERROR_PRERELEASE).when(END_OF_INPUT);
+        transitionTable.from(S14_PRERELEASE_AFTER_DOT).to(ERROR_PRERELEASE).when(DOT);
 
         /*
          *
@@ -301,37 +310,37 @@ class SemVerFiniteStateTransitionTable {
         transitionTable
                 .from(S15_PRERELEASE_DIGIT_LOOP)
                 .to(S15_PRERELEASE_DIGIT_LOOP)
-                .when(TransitionCharSets.ZERO_DIGIT);
+                .when(ZERO_DIGIT);
         transitionTable
                 .from(S15_PRERELEASE_DIGIT_LOOP)
                 .to(S12_PRERELEASE_AFTER_ALPHA)
-                .when(TransitionCharSets.ALPHA);
-        transitionTable.from(S15_PRERELEASE_DIGIT_LOOP).to(ERROR_PRERELEASE).when(TransitionCharSets.END_OF_INPUT);
-        transitionTable.from(S15_PRERELEASE_DIGIT_LOOP).to(ERROR_PRERELEASE).when(TransitionCharSets.NO_ZERO_ALPHA_EOI);
+                .when(ALPHA);
+        transitionTable.from(S15_PRERELEASE_DIGIT_LOOP).to(ERROR_PRERELEASE).when(END_OF_INPUT);
+        transitionTable.from(S15_PRERELEASE_DIGIT_LOOP).to(ERROR_PRERELEASE).when(NO_ZERO_ALPHA_EOI);
 
         /*
          *
          */
-        transitionTable.from(S16_AFTER_PLUS_BEFORE_BUILD).to(ERROR_BUILD).when(TransitionCharSets.END_OF_INPUT);
+        transitionTable.from(S16_AFTER_PLUS_BEFORE_BUILD).to(ERROR_BUILD).when(END_OF_INPUT);
         transitionTable
                 .from(S16_AFTER_PLUS_BEFORE_BUILD)
                 .to(S17_BUILD_AFTER_ALPHANUM)
-                .when(TransitionCharSets.ALPHANUM);
-        transitionTable.from(S16_AFTER_PLUS_BEFORE_BUILD).to(ERROR_BUILD).when(TransitionCharSets.NO_ALPHANUM);
+                .when(ALPHANUM);
+        transitionTable.from(S16_AFTER_PLUS_BEFORE_BUILD).to(ERROR_BUILD).when(NO_ALPHANUM);
 
         /*
          *
          */
-        transitionTable.from(S17_BUILD_AFTER_ALPHANUM).to(END_OF_SEMVER).when(TransitionCharSets.END_OF_INPUT);
+        transitionTable.from(S17_BUILD_AFTER_ALPHANUM).to(END_OF_SEMVER).when(END_OF_INPUT);
         transitionTable
                 .from(S17_BUILD_AFTER_ALPHANUM)
                 .to(S17_BUILD_AFTER_ALPHANUM)
-                .when(TransitionCharSets.ALPHANUM);
+                .when(ALPHANUM);
         transitionTable
                 .from(S17_BUILD_AFTER_ALPHANUM)
                 .to(S18_BUILD_DOT_IN_BUILD)
-                .when(TransitionCharSets.DOT);
-        transitionTable.from(S17_BUILD_AFTER_ALPHANUM).to(ERROR_BUILD).when(TransitionCharSets.NEITHER_ALPHANUM_DOT);
+                .when(DOT);
+        transitionTable.from(S17_BUILD_AFTER_ALPHANUM).to(ERROR_BUILD).when(NEITHER_ALPHANUM_DOT);
 
         /*
          *
@@ -339,8 +348,8 @@ class SemVerFiniteStateTransitionTable {
         transitionTable
                 .from(S18_BUILD_DOT_IN_BUILD)
                 .to(S17_BUILD_AFTER_ALPHANUM)
-                .when(TransitionCharSets.ALPHANUM);
-        transitionTable.from(S18_BUILD_DOT_IN_BUILD).to(ERROR_BUILD).when(TransitionCharSets.END_OF_INPUT);
-        transitionTable.from(S18_BUILD_DOT_IN_BUILD).to(ERROR_BUILD).when(TransitionCharSets.DOT);
+                .when(ALPHANUM);
+        transitionTable.from(S18_BUILD_DOT_IN_BUILD).to(ERROR_BUILD).when(END_OF_INPUT);
+        transitionTable.from(S18_BUILD_DOT_IN_BUILD).to(ERROR_BUILD).when(DOT);
     }
 }
