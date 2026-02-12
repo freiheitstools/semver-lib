@@ -12,6 +12,15 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  */
 public class InvalidSemanticVersionException extends RuntimeException {
 
+    public static InvalidSemanticVersionException ofMessage(@NonNull String message) {
+        return new InvalidSemanticVersionException(message);
+    }
+
+    public static InvalidSemanticVersionException ofSemanticVersion(@NonNull String semanticVersion) {
+        String message = "%s is not a valid semantic version".formatted(semanticVersion);
+        return new InvalidSemanticVersionException(message);
+    }
+
     /**
      * <p>
      * Creates a new instance of the exception for a given semantic version.
@@ -20,7 +29,7 @@ public class InvalidSemanticVersionException extends RuntimeException {
      * @param semanticVersion
      *            the given invalid semantic version
      */
-    public InvalidSemanticVersionException(@NonNull String semanticVersion) {
-        super(semanticVersion + " is not a valid semantic version");
+    private InvalidSemanticVersionException(@NonNull String message) {
+        super(message);
     }
 }

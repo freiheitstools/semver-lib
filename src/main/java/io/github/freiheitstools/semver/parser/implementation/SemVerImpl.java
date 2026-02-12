@@ -18,7 +18,7 @@ class SemVerImpl implements SemVer {
     @NonNull @Override
     public Optional<String> getBuild() {
         if (isInvalid()) {
-            throw new InvalidSemanticVersionException(getSemanticVersion());
+            throw InvalidSemanticVersionException.ofSemanticVersion(getSemanticVersion());
         }
 
         return Optional.ofNullable(build);
@@ -32,7 +32,7 @@ class SemVerImpl implements SemVer {
     @Override
     public Integer getMajor() {
         if (isInvalid()) {
-            throw new InvalidSemanticVersionException(getSemanticVersion());
+            throw InvalidSemanticVersionException.ofSemanticVersion(getSemanticVersion());
         }
 
         return Integer.valueOf(majorVersion);
@@ -41,7 +41,7 @@ class SemVerImpl implements SemVer {
     @Override
     public Integer getMinor() {
         if (isInvalid()) {
-            throw new InvalidSemanticVersionException(getSemanticVersion());
+            throw InvalidSemanticVersionException.ofSemanticVersion(getSemanticVersion());
         }
 
         return Integer.valueOf(minorVersion);
@@ -50,7 +50,7 @@ class SemVerImpl implements SemVer {
     @Override
     public Integer getPatch() {
         if (isInvalid()) {
-            throw new InvalidSemanticVersionException(getSemanticVersion());
+            throw InvalidSemanticVersionException.ofSemanticVersion(getSemanticVersion());
         }
 
         return Integer.valueOf(patchVersion);
@@ -59,7 +59,7 @@ class SemVerImpl implements SemVer {
     @NonNull @Override
     public Optional<String> getPreRelease() {
         if (isInvalid()) {
-            throw new InvalidSemanticVersionException(getSemanticVersion());
+            throw InvalidSemanticVersionException.ofSemanticVersion(getSemanticVersion());
         }
 
         return Optional.ofNullable(preReleaseIdentifier);
