@@ -235,7 +235,7 @@
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
                 <configuration>
-                    <coverageThreshold>${svp.pitest-target.coverage}</coverageThreshold>
+                    <mutationThreshold>${svp.pitest-target.coverage}</mutationThreshold>
                     <skip>${svp.pitest.skip}</skip>
                 </configuration>
                 <executions>
