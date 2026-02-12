@@ -2,6 +2,7 @@ package io.github.freiheitstools.semver.parser.implementation;
 
 import static io.github.freiheitstools.semver.parser.implementation.SemVerRegex.SEM_VER_PATTERN;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import io.github.freiheitstools.semver.parser.api.SemVer;
@@ -16,6 +17,16 @@ class InternalSemanticVersionParserTest {
     InternalSemanticVersionParser classUnderTest = new InternalSemanticVersionParser();
 
     // todo Test if all given valid semvers are valid and result matches regex!
+
+    @Test
+    void inputStringWithMaxLengthWillBeParsedProperly() {
+        // -- Given
+        String given = "1.1." + "1".repeat(InternalSemanticVersionParser.MAX_LENGTH - 4);
+
+        // -- Then
+        assertThat(given).hasSize(InternalSemanticVersionParser.MAX_LENGTH);
+        assertThat(classUnderTest.parse(given).isValid()).isTrue();
+    }
 
     @CsvFileSource(resources = "/dataset/semantic-versions-invalid-with-prerelease.csv", useHeadersInDisplayName = true)
     @ParameterizedTest(name = ">{0}<")
@@ -73,6 +84,18 @@ class InternalSemanticVersionParserTest {
         assertThat(result.isValid())
                 .describedAs("Semantic version %s should be taken as valid", givenSemVer)
                 .isTrue();
+    }
+
+    @Test
+    void toLongInputStringWillBeRefused() {
+        // -- Given
+        String given = "1".repeat(InternalSemanticVersionParser.MAX_LENGTH + 1);
+
+        // -- Then
+        assertThat(given).hasSizeGreaterThan(InternalSemanticVersionParser.MAX_LENGTH);
+        assertThatThrownBy(() -> classUnderTest.parse(given))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("The given semantic version exceeds the maximum allowed length of 2048 characters");
     }
 
     @ParameterizedTest
