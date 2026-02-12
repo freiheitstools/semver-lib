@@ -15,7 +15,7 @@ public class InternalSemanticVersionParser implements SemVerParser {
     public @NonNull SemVer parse(String semanticVersion) throws IllegalArgumentException {
         if (StringUtils.length(semanticVersion) > MAX_LENGTH) {
             String message = """
-					The given semantic version exceeds the maximum allowed length of %d characters
+					The given semantic version exceeds the maximum allowed length of %d characters\
 					""".formatted(MAX_LENGTH);
             throw new IllegalArgumentException(message);
         }

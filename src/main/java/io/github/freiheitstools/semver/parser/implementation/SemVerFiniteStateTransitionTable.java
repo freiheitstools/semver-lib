@@ -35,6 +35,8 @@ import static io.github.freiheitstools.semver.parser.implementation.TransitionCh
 import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.NEITHER_ALPHA_ZERO_DIGIT;
 import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.NEITHER_DIGIT_ALPHA_HYPHEN_DOT_PLUS;
 import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.NEITHER_DOT_DIGIT;
+import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.NEITHER_EOI_PLUS_ALPHANUM_DOT;
+import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.NEITHER_HYPHEN_PLUS_EOI;
 import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.NON_DIGIT;
 import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.NOT_A_DOT;
 import static io.github.freiheitstools.semver.parser.implementation.TransitionCharSets.NO_ALPHANUM;
@@ -108,7 +110,7 @@ class SemVerFiniteStateTransitionTable {
                 .when(DOT);
         transitionTable
                 .from(S02_MAJOR_STARTS_WITH_POSITIVE_DIGIT)
-                .to(ERROR_MINOR_VERSION)
+                .to(ERROR_MAJOR_VERSION)
                 .when(NEITHER_DOT_DIGIT);
 
         /*
@@ -191,6 +193,7 @@ class SemVerFiniteStateTransitionTable {
         /*
          *
          */
+        transitionTable.from(S08_PATCH_STARTS_WITH_ZERO).to(ERROR_PATCH_NUMBER).when(NEITHER_HYPHEN_PLUS_EOI);
         transitionTable.from(S08_PATCH_STARTS_WITH_ZERO).to(END_OF_SEMVER).when(END_OF_INPUT);
         transitionTable.from(S08_PATCH_STARTS_WITH_ZERO).to(ERROR_PATCH_NUMBER).when(DIGIT);
         transitionTable
@@ -229,6 +232,10 @@ class SemVerFiniteStateTransitionTable {
         /*
          *
          */
+        transitionTable
+                .from(S11_PRERELEASE_AFTER_POSITIVE_DIGIT)
+                .to(ERROR_PRERELEASE)
+                .when(NEITHER_EOI_PLUS_ALPHANUM_DOT);
         transitionTable
                 .from(S11_PRERELEASE_AFTER_POSITIVE_DIGIT)
                 .to(END_OF_SEMVER)
@@ -311,6 +318,10 @@ class SemVerFiniteStateTransitionTable {
                 .from(S15_PRERELEASE_DIGIT_LOOP)
                 .to(S15_PRERELEASE_DIGIT_LOOP)
                 .when(ZERO_DIGIT);
+        transitionTable
+                .from(S15_PRERELEASE_DIGIT_LOOP)
+                .to(S15_PRERELEASE_DIGIT_LOOP)
+                .when(POSITIVE_DIGIT);
         transitionTable
                 .from(S15_PRERELEASE_DIGIT_LOOP)
                 .to(S12_PRERELEASE_AFTER_ALPHA)
