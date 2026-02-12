@@ -27,7 +27,7 @@ final class CharacterSets {
         ZERO = "0";
 
         ALPHA = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" + HYPHEN;
-        ALPHANUMERIC = ALPHA + HYPHEN + DIGITS + HYPHEN;
+        ALPHANUMERIC = ALPHA + DIGITS;
         TERMINAL = "" + TERMINAL_SIGNAL;
     }
 }
