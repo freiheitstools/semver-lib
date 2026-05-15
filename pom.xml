@@ -68,7 +68,7 @@
         <svp.pitest-target.coverage>94</svp.pitest-target.coverage>
         <svp.pitest.skip>false</svp.pitest.skip>
         <svp.pitest.version>1.23.1</svp.pitest.version>
-        <svp.spotless.version>3.4.0</svp.spotless.version>
+        <svp.spotless.version>3.5.0</svp.spotless.version>
     </properties>
 
     <dependencyManagement>
