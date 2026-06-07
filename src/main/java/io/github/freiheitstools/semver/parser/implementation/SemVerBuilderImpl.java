@@ -135,23 +135,23 @@ public class SemVerBuilderImpl extends SemVerBuilder {
     }
 
     @Override
-    public SemVerBuilder startFrom(SemVer currentSemVer) {
-        this.major = currentSemVer.getMajor();
-        this.minor = currentSemVer.getMinor();
-        this.patch = currentSemVer.getPatch();
-        currentSemVer.getBuild().ifPresent(build -> this.build = build);
-        currentSemVer.getPreRelease().ifPresent(preRelease -> this.prerelease = preRelease);
-
-        return this;
-    }
-
-    @Override
     public SemVerBuilder startFrom(int major, int minor, int patch) {
         this.major = major;
         this.minor = minor;
         this.patch = patch;
 
         validateCurrentSemanticVersion();
+
+        return this;
+    }
+
+    @Override
+    public SemVerBuilder startFrom(SemVer currentSemVer) {
+        this.major = currentSemVer.getMajor();
+        this.minor = currentSemVer.getMinor();
+        this.patch = currentSemVer.getPatch();
+        currentSemVer.getBuild().ifPresent(build -> this.build = build);
+        currentSemVer.getPreRelease().ifPresent(preRelease -> this.prerelease = preRelease);
 
         return this;
     }
