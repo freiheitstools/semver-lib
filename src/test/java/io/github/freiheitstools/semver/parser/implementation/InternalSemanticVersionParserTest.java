@@ -98,20 +98,6 @@ class InternalSemanticVersionParserTest {
                 .hasMessage("The given semantic version exceeds the maximum allowed length of 2048 characters");
     }
 
-    @ParameterizedTest
-    @CsvFileSource(resources = "/dataset/semantic-versions-valid.csv", useHeadersInDisplayName = true)
-    void validSemanticVersioNumbersAreParsedProperly(String givenSemVer) {
-        assertThat(givenSemVer)
-                .describedAs("Semantic version %s should match regular expression by semver.org", givenSemVer)
-                .matches(SEM_VER_PATTERN);
-
-        SemVer result = classUnderTest.parse(givenSemVer);
-
-        assertThat(result.isValid())
-                .describedAs("Semantic version %s should be taken as valid", givenSemVer)
-                .isTrue();
-    }
-
     @CsvFileSource(resources = "/dataset/semantic-versions-valid-with-build.csv", useHeadersInDisplayName = true)
     @ParameterizedTest
     void validSemanticVersionNumbersWithBuildAreParsedProperly(
@@ -132,6 +118,26 @@ class InternalSemanticVersionParserTest {
             softly.assertThat(result.getPreRelease()).isEmpty();
             softly.assertThat(result.hasBuild()).isTrue();
             softly.assertThat(result.getBuild()).hasValue(expectedBuild);
+        });
+    }
+
+    @CsvFileSource(resources = "/dataset/semantic-versions-valid-only-core.csv", useHeadersInDisplayName = true)
+    @ParameterizedTest
+    void validSemanticVersionNumbersWithoutPreReleaseAndBuildAreParsedProperly(
+            String givenSemanticVersion,
+            Integer expectedMajorNumber,
+            Integer expectedMinorNumber,
+            Integer expectedPatchNumber) {
+        SemVer result = classUnderTest.parse(givenSemanticVersion);
+
+        assertSoftly(softly -> {
+            softly.assertThat(result.isValid()).isTrue();
+            softly.assertThat(result.getErrorLocation()).isEmpty();
+            softly.assertThat(result.getMajor()).isEqualTo(expectedMajorNumber);
+            softly.assertThat(result.getMinor()).isEqualTo(expectedMinorNumber);
+            softly.assertThat(result.getPatch()).isEqualTo(expectedPatchNumber);
+            softly.assertThat(result.hasBuild()).isFalse();
+            softly.assertThat(result.hasPreRelease()).isFalse();
         });
     }
 
@@ -158,24 +164,18 @@ class InternalSemanticVersionParserTest {
         });
     }
 
-    @CsvFileSource(resources = "/dataset/semantic-versions-valid-only-core.csv", useHeadersInDisplayName = true)
     @ParameterizedTest
-    void validSemanticVersionNumbersWithoutPreReleaseAndBuildAreParsedProperly(
-            String givenSemanticVersion,
-            Integer expectedMajorNumber,
-            Integer expectedMinorNumber,
-            Integer expectedPatchNumber) {
-        SemVer result = classUnderTest.parse(givenSemanticVersion);
+    @CsvFileSource(resources = "/dataset/semantic-versions-valid.csv", useHeadersInDisplayName = true)
+    void validSemanticVersioNumbersAreParsedProperly(String givenSemVer) {
+        assertThat(givenSemVer)
+                .describedAs("Semantic version %s should match regular expression by semver.org", givenSemVer)
+                .matches(SEM_VER_PATTERN);
 
-        assertSoftly(softly -> {
-            softly.assertThat(result.isValid()).isTrue();
-            softly.assertThat(result.getErrorLocation()).isEmpty();
-            softly.assertThat(result.getMajor()).isEqualTo(expectedMajorNumber);
-            softly.assertThat(result.getMinor()).isEqualTo(expectedMinorNumber);
-            softly.assertThat(result.getPatch()).isEqualTo(expectedPatchNumber);
-            softly.assertThat(result.hasBuild()).isFalse();
-            softly.assertThat(result.hasPreRelease()).isFalse();
-        });
+        SemVer result = classUnderTest.parse(givenSemVer);
+
+        assertThat(result.isValid())
+                .describedAs("Semantic version %s should be taken as valid", givenSemVer)
+                .isTrue();
     }
 
     @Test

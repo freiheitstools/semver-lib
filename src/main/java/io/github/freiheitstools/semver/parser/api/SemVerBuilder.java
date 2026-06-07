@@ -165,18 +165,6 @@ public abstract class SemVerBuilder {
     public abstract SemVerBuilder setPrerelease(String prereleaseVersion);
 
     /**
-     * Starts the build with a given valid semantic version as basis the semantic
-     * version to build.
-     *
-     * @param currentSemVer
-     *            semantic version to start from
-     * @return the current instance of the builder
-     * @throws InvalidSemanticVersionException
-     *             in case the given semantic version is not valid
-     */
-    public abstract SemVerBuilder startFrom(SemVer currentSemVer);
-
-    /**
      * Starts the build with a given major version, minor version, and patch version
      * as basis the semantic version to build.
      *
@@ -191,4 +179,16 @@ public abstract class SemVerBuilder {
      *             in case the resulting semantic version would not be valid
      */
     public abstract SemVerBuilder startFrom(int major, int minor, int patch);
+
+    /**
+     * Starts the build with a given valid semantic version as basis the semantic
+     * version to build.
+     *
+     * @param currentSemVer
+     *            semantic version to start from
+     * @return the current instance of the builder
+     * @throws InvalidSemanticVersionException
+     *             in case the given semantic version is not valid
+     */
+    public abstract SemVerBuilder startFrom(SemVer currentSemVer);
 }
